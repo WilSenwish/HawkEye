@@ -7,8 +7,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.littleyes.common.util.HawkEyeConfig.HAWK_EYE;
+
 /**
- * @Description 拓展插件服务加载器
+ * <p> <b> 拓展插件服务加载器 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-18
@@ -62,8 +64,8 @@ public class EpLoader<T> {
                 if (instance == null) {
                     instance = loadExtensionPlugin();
                     holder.set(instance);
-                    log.info("HawkEye ===> Loaded [NO.{}] extension plugin [{}] with provider[{}]",
-                            counter.incrementAndGet(), type, instance);
+                    log.info("{} Loaded [NO.{}] extension plugin [{}] with provider[{}]",
+                            HAWK_EYE, counter.incrementAndGet(), type, instance);
                 }
             }
         }
@@ -106,7 +108,7 @@ public class EpLoader<T> {
                 }
             }
         } catch (Exception e) {
-            log.error("HawkEye ===> Load extension plugin[{}] with error [{}]", type, e.getMessage(), e);
+            log.error("{} Load extension plugin[{}] with error [{}]", HAWK_EYE, type, e.getMessage(), e);
         }
 
         throw new NullPointerException("Extension Plugin of type[" + type.getName() + "] not found!!!");

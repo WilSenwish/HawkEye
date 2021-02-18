@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * @Description 分布式链路追踪 ID 生成器
+ * <p> <b> 分布式链路追踪 ID 生成器 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-18

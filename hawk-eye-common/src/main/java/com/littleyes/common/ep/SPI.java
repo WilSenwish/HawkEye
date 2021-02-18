@@ -3,7 +3,7 @@ package com.littleyes.common.ep;
 import java.lang.annotation.*;
 
 /**
- * @Description 插件 SPI 注解
+ * <p> <b> 插件 SPI 注解 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-18

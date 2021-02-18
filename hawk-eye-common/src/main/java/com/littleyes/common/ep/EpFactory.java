@@ -1,7 +1,7 @@
 package com.littleyes.common.ep;
 
 /**
- * @Description 拓展插件工厂
+ * <p> <b> 拓展插件工厂 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-18
