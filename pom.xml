@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目说明：项目基本属性 -->
+    <groupId>com.littleyes</groupId>
+    <artifactId>hawk-eye</artifactId>
+    <version>20201231001</version>
+
+    <!-- 项目说明：项目作为聚合工程的父工程 -->
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>hawk-eye-agent</module>
+        <module>hawk-eye-agent-core</module>
+        <module>hawk-eye-alarm</module>
+        <module>hawk-eye-collector</module>
+        <module>hawk-eye-common</module>
+        <module>hawk-eye-manager</module>
+        <module>hawk-eye-server</module>
+        <module>hawk-eye-storage</module>
+    </modules>
+
+</project>
