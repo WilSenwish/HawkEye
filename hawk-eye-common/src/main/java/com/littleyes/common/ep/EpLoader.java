@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.littleyes.common.util.HawkEyeConfig.HAWK_EYE;
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
 
 /**
  * <p> <b> 拓展插件服务加载器 </b> </p>

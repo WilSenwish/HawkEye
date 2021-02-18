@@ -1,4 +1,4 @@
-package com.littleyes.common.util;
+package com.littleyes.common.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.littleyes.common.util.HawkEyeConfig.HAWK_EYE;
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
 
 /**
  * <p> <b> 配置文件加载器 </b> </p>

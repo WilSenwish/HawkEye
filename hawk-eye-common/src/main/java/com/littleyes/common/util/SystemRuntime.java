@@ -2,7 +2,7 @@ package com.littleyes.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static com.littleyes.common.util.HawkEyeConfig.HAWK_EYE;
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
 
 /**
  * <p> <b> 系统本身运行环境 </b> </p>
