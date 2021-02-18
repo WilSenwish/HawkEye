@@ -7,20 +7,89 @@
     <!-- 项目说明：项目基本属性 -->
     <groupId>com.littleyes</groupId>
     <artifactId>hawk-eye</artifactId>
-    <version>20201231001</version>
+    <version>2021.02.18.001</version>
 
     <!-- 项目说明：项目作为聚合工程的父工程 -->
     <packaging>pom</packaging>
 
+    <!--基础属性配置-->
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <hawk-eye.group>com.littleyes</hawk-eye.group>
+        <hawk-eye.artifact>hawk-eye</hawk-eye.artifact>
+        <hawk-eye.version>2021.02.18.001</hawk-eye.version>
+
+        <ttl.version>2.11.0</ttl.version>
+    </properties>
+
+    <!--模块-->
     <modules>
-        <module>hawk-eye-agent</module>
-        <module>hawk-eye-agent-core</module>
-        <module>hawk-eye-alarm</module>
-        <module>hawk-eye-collector</module>
-        <module>hawk-eye-common</module>
-        <module>hawk-eye-manager</module>
-        <module>hawk-eye-server</module>
-        <module>hawk-eye-storage</module>
+        <module>${hawk-eye.artifact}-agent</module>
+        <module>${hawk-eye.artifact}-agent-core</module>
+        <module>${hawk-eye.artifact}-alarm</module>
+        <module>${hawk-eye.artifact}-collector</module>
+        <module>${hawk-eye.artifact}-common</module>
+        <module>${hawk-eye.artifact}-manager</module>
+        <module>${hawk-eye.artifact}-server</module>
+        <module>${hawk-eye.artifact}-storage</module>
     </modules>
+
+    <!--依赖管理-->
+    <dependencyManagement>
+        <dependencies>
+            <!--项目内依赖-->
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-agent</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-agent-core</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-alarm</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-collector</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-common</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-manager</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-server</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-storage</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+
+            <!--项目外依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${ttl.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

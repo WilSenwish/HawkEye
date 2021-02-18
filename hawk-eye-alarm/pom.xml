@@ -7,10 +7,12 @@
     <parent>
         <groupId>com.littleyes</groupId>
         <artifactId>hawk-eye</artifactId>
-        <version>20201231001</version>
+        <version>2021.02.18.001</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>hawk-eye-alarm</artifactId>
+    <version>2021.02.18.001</version>
 
 
 </project>
