@@ -5,8 +5,9 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import java.util.Objects;
 
 /**
- * @author Junbing.Chen
  * @Description 上下文
+ *
+ * @author Junbing.Chen
  * @date 2021-02-18
  */
 public class TraceContext {
@@ -20,7 +21,7 @@ public class TraceContext {
         return traceId;
     }
 
-    public void setTraceId(String traceId) {
+    private void setTraceId(String traceId) {
         this.traceId = traceId;
     }
 
@@ -28,7 +29,7 @@ public class TraceContext {
         return traceDebug;
     }
 
-    public void setTraceDebug(boolean traceDebug) {
+    private void setTraceDebug(boolean traceDebug) {
         this.traceDebug = traceDebug;
     }
 
