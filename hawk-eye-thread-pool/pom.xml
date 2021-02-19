@@ -11,18 +11,13 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>hawk-eye-common</artifactId>
+    <artifactId>hawk-eye-thread-pool</artifactId>
     <version>2021.02.18.001</version>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-common</artifactId>
         </dependency>
 
         <!--log-->

@@ -2,6 +2,8 @@ package com.littleyes.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
 
 /**
@@ -16,13 +18,15 @@ public class SystemRuntime {
     public SystemRuntime() {
     }
 
-    private static final Runtime RUNTIME = Runtime.getRuntime();
+    private static Runtime runtime = Runtime.getRuntime();
 
-    public static final int CPU_CORES = RUNTIME.availableProcessors();
+    private static AtomicInteger shutdownHookNum = new AtomicInteger();
+
+    public static final int CPU_CORES = runtime.availableProcessors();
 
     public static void addShutdownHook(Thread hook) {
-        RUNTIME.addShutdownHook(hook);
-        log.info("{} Add ShutdownHook: {}", HAWK_EYE, hook.getName());
+        runtime.addShutdownHook(hook);
+        log.info("{} Added [NO.{}] ShutdownHook[{}]!", HAWK_EYE, shutdownHookNum.incrementAndGet(), hook.getName());
     }
 
 }

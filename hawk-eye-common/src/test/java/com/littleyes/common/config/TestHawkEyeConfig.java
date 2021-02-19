@@ -1,6 +1,4 @@
-package com.littleyes.common.trace;
-
-import com.littleyes.common.config.HawkEyeConfig;
+package com.littleyes.common.config;
 
 public class TestHawkEyeConfig {
     public static void main(String[] args) {
