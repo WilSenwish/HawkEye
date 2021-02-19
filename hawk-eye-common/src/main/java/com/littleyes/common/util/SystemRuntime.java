@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 
 /**
  * <p> <b> 系统本身运行环境 </b> </p>
@@ -26,7 +26,7 @@ public class SystemRuntime {
 
     public static void addShutdownHook(Thread hook) {
         runtime.addShutdownHook(hook);
-        log.info("{} Added [NO.{}] ShutdownHook[{}]!", HAWK_EYE, shutdownHookNum.incrementAndGet(), hook.getName());
+        log.info("{} Added [NO.{}] ShutdownHook[{}]!", HAWK_EYE_COMMON, shutdownHookNum.incrementAndGet(), hook.getName());
     }
 
 }

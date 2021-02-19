@@ -3,7 +3,7 @@ package com.littleyes.threadpool.core;
 import com.littleyes.threadpool.exception.StopPooledThreadException;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.littleyes.threadpool.util.Constants.NAME;
+import static com.littleyes.threadpool.util.Constants.HAWK_EYE_POOL;
 
 /**
  * A Thread implementation that records the time at which it was created.
@@ -45,10 +45,10 @@ class HawkEyeTaskThread extends Thread {
             try {
                 wrappedRunnable.run();
             } catch (StopPooledThreadException exc) {
-                log.error("{} Thread exiting on purpose", NAME, exc);
+                log.error("{} Thread exiting on purpose", HAWK_EYE_POOL, exc);
             } catch (Exception e) {
                 log.error("{} Thread[{}] task[{}] execute with error: {}",
-                        NAME, Thread.currentThread().getName(), wrappedRunnable.toString(), e);
+                        HAWK_EYE_POOL, Thread.currentThread().getName(), wrappedRunnable.toString(), e);
             }
         }
 

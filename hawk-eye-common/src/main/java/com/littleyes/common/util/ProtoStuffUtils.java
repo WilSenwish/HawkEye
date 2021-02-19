@@ -160,7 +160,7 @@ public class ProtoStuffUtils {
                     bos.close();
                 }
             } catch (IOException e) {
-                log.error("HEC ===> | {}", e.getMessage(), e);
+                log.error("HawkEyeCom ===> | {}", e.getMessage(), e);
             }
         }
     }

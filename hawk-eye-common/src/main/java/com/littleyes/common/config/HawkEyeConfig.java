@@ -14,7 +14,7 @@ import java.util.Properties;
 @Slf4j
 public class HawkEyeConfig {
 
-    public static final String HAWK_EYE             = "HawkEye ===> |";
+    public static final String HAWK_EYE_COMMON      = "HawkEyeCommon ===> |";
     private static final String CONF_RESOURCE_DIR   = "hawk-eye-config.root";
     private static final String CONF_RESOURCE_NAME  = "hawk-eye-config.properties";
     private static final String GIT_RESOURCE_NAME   = "git.properties";
@@ -47,14 +47,14 @@ public class HawkEyeConfig {
             loggingEnabled          = Boolean.parseBoolean(properties.getProperty("hawk-eye.logging-enabled",  "false"));
             loggingCollectLevel     = properties.getProperty("hawk-eye.logging-collect-level", loggingCollectLevel);
         } catch (Exception e) {
-            log.error("{} Load config[{}] error：{}", HAWK_EYE, CONF_RESOURCE_NAME, e.getMessage());
+            log.error("{} Load config[{}] error：{}", HAWK_EYE_COMMON, CONF_RESOURCE_NAME, e.getMessage());
         }
 
         try {
             Properties properties   = HawkEyeConfigLoader.loadFromClassPath(GIT_RESOURCE_NAME);
             commitId                = properties.getProperty("git.commit.id", commitId);
         } catch (Exception e) {
-            log.error("{} Load config[{}] error：{}", HAWK_EYE, GIT_RESOURCE_NAME, e.getMessage());
+            log.error("{} Load config[{}] error：{}", HAWK_EYE_COMMON, GIT_RESOURCE_NAME, e.getMessage());
         }
     }
 

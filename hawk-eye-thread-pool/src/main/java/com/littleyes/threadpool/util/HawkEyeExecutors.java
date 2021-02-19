@@ -88,7 +88,7 @@ public class HawkEyeExecutors {
             SystemRuntime.addShutdownHook(
                     new Thread(
                             () -> {
-                                log.info("{} All HawkEyeThreadPoolExecutor size: {}", NAME, RUNNING_EXECUTORS.size());
+                                log.info("{} All HawkEyeThreadPoolExecutor size: {}", HAWK_EYE_POOL, RUNNING_EXECUTORS.size());
 
                                 RUNNING_EXECUTORS.values().parallelStream().forEach(executor -> {
                                     try {
@@ -101,7 +101,7 @@ public class HawkEyeExecutors {
                                 });
                                 RUNNING_EXECUTORS.clear();
 
-                                log.info("{} All HawkEyeThreadPoolExecutor have been shutdown!!!", NAME);
+                                log.info("{} All HawkEyeThreadPoolExecutor have been shutdown!!!", HAWK_EYE_POOL);
                             },
                             "HawkEyeThreadPoolExecutorShutdownHook"
                     )
@@ -193,7 +193,7 @@ public class HawkEyeExecutors {
         HawkEyeThreadPoolExecutor build() {
             HawkEyeThreadPoolExecutor runningExecutor = RUNNING_EXECUTORS.get(name);
             if (Objects.nonNull(runningExecutor)) {
-                log.warn("{} Reuse HawkEyeThreadPoolExecutor[{}]!", NAME, name);
+                log.warn("{} Reuse HawkEyeThreadPoolExecutor[{}]!", HAWK_EYE_POOL, name);
                 return runningExecutor;
             }
 
@@ -261,7 +261,7 @@ public class HawkEyeExecutors {
                     .newSingleThreadScheduledExecutor(new HawkEyeThreadFactory((name + ".Monitor"), true))
                     .scheduleAtFixedRate(runnable, initialDelay, MILLIS_PER_MINUTE, TimeUnit.MILLISECONDS);
 
-            log.info("{} Initialized [NO.{}] HawkEyeThreadPoolExecutor[{}]!", NAME, currentThreadPoolCount, name);
+            log.info("{} Initialized [NO.{}] HawkEyeThreadPoolExecutor[{}]!", HAWK_EYE_POOL, currentThreadPoolCount, name);
         }
 
         private static class MonitorRunnable implements Runnable {

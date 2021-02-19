@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE;
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 
 /**
  * <p> <b> 配置文件加载器 </b> </p>
@@ -24,7 +24,7 @@ public class HawkEyeConfigLoader {
     }
 
     public static Properties loadFromClassPath(String resource) throws IOException {
-        log.info("{} Load class path resource [{}]", HAWK_EYE, resource);
+        log.info("{} Load class path resource [{}]", HAWK_EYE_COMMON, resource);
         return PropertiesLoaderUtils.loadAllProperties(resource);
     }
 
@@ -32,7 +32,7 @@ public class HawkEyeConfigLoader {
         resource = configRoot + File.separator + resource;
         Properties properties = new Properties();
 
-        log.info("{} Load file system resource [{}]", HAWK_EYE, resource);
+        log.info("{} Load file system resource [{}]", HAWK_EYE_COMMON, resource);
         try (InputStream is = new FileInputStream(resource)) {
             properties.load(is);
         }

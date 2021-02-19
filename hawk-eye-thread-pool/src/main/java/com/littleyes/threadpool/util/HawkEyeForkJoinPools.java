@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static com.littleyes.threadpool.util.Constants.MILLIS_PER_MINUTE;
-import static com.littleyes.threadpool.util.Constants.NAME;
+import static com.littleyes.threadpool.util.Constants.HAWK_EYE_POOL;
 
 /**
  * <p> <b> ForkJoinPool 拓展工具类 </b> </p>
@@ -143,7 +143,7 @@ public class HawkEyeForkJoinPools {
                     .newSingleThreadScheduledExecutor(new HawkEyeThreadFactory(name + ".Monitor", true))
                     .scheduleAtFixedRate(runnable, initialDelay, MILLIS_PER_MINUTE, TimeUnit.MILLISECONDS);
 
-            log.info("{} Initialized [NO.{}] ForkJoinPool[{}]!", NAME, (poolNumberSequence.get() + 1), name);
+            log.info("{} Initialized [NO.{}] ForkJoinPool[{}]!", HAWK_EYE_POOL, (poolNumberSequence.get() + 1), name);
         }
 
     }

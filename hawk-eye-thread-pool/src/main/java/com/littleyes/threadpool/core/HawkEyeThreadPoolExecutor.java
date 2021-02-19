@@ -129,7 +129,7 @@ public class HawkEyeThreadPoolExecutor extends ThreadPoolExecutor {
         try {
             long timeConsume = System.currentTimeMillis() - MarkerContext.getBeginTime();
             if (timeConsume > MILLIS_PER_MINUTE) {
-                log.warn("{} Task[{}] execute with time consume [{}]ms", NAME, MarkerContext.getMarker(), timeConsume);
+                log.warn("{} Task[{}] execute with time consume [{}]ms", HAWK_EYE_POOL, MarkerContext.getMarker(), timeConsume);
             }
         } finally {
             // Mark in the thread task
@@ -145,7 +145,7 @@ public class HawkEyeThreadPoolExecutor extends ThreadPoolExecutor {
     @Override
     protected void terminated() {
         super.terminated();
-        log.warn("{} HawkEyeThreadPoolExecutor[{}] terminated!!!", NAME, name);
+        log.warn("{} HawkEyeThreadPoolExecutor[{}] terminated!!!", HAWK_EYE_POOL, name);
     }
 
     @Override
