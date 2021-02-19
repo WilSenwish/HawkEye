@@ -1,6 +1,6 @@
 package com.littleyes.threadpool.core;
 
-import com.littleyes.threadpool.exception.StoppingThreadPoolException;
+import com.littleyes.threadpool.exception.StopPooledThreadException;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.littleyes.threadpool.util.Constants.NAME;
@@ -29,7 +29,7 @@ class HawkEyeTaskThread extends Thread {
     }
 
     /**
-     * Wraps a {@link Runnable} to swallow any {@link StoppingThreadPoolException}
+     * Wraps a {@link Runnable} to swallow any {@link StopPooledThreadException}
      * instead of letting it go and potentially trigger a break in a debugger.
      */
     private static class WrappedRunnable implements Runnable {
@@ -44,7 +44,7 @@ class HawkEyeTaskThread extends Thread {
         public void run() {
             try {
                 wrappedRunnable.run();
-            } catch (StoppingThreadPoolException exc) {
+            } catch (StopPooledThreadException exc) {
                 log.error("{} Thread exiting on purpose", NAME, exc);
             } catch (Exception e) {
                 log.error("{} Thread[{}] task[{}] execute with error: {}",

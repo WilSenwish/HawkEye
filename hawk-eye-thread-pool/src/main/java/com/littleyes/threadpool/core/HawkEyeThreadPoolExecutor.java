@@ -1,6 +1,6 @@
 package com.littleyes.threadpool.core;
 
-import com.littleyes.threadpool.exception.StoppingThreadPoolException;
+import com.littleyes.threadpool.exception.StopPooledThreadException;
 import com.littleyes.threadpool.util.MarkerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -193,7 +193,7 @@ public class HawkEyeThreadPoolExecutor extends ThreadPoolExecutor {
                             + Thread.currentThread().getName()
                             + "] to avoid potential memory leaks after a context was stopped!";
 
-                    throw new StoppingThreadPoolException(msg);
+                    throw new StopPooledThreadException(msg);
                 }
             }
         }

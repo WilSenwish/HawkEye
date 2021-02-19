@@ -9,11 +9,11 @@ import com.littleyes.threadpool.core.HawkEyeThreadPoolExecutor;
  * @author Junbing.Chen
  * @date 2021-02-19
  */
-public class StoppingThreadPoolException extends RuntimeException {
+public class StopPooledThreadException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public StoppingThreadPoolException(String message) {
+    public StopPooledThreadException(String message) {
         super(message);
     }
 

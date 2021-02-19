@@ -8,17 +8,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
-/**
- * <p> <b> // TODO </b> </p>
- *
- * @author Junbing.Chen
- * @date 2021-02-19
- */
 public class TestThreadPool {
     public static void main(String[] args) throws InterruptedException {
         HawkEyeForkJoinPools.monitorForkJoinPoolOfCommonPool();
+
         for (int i = 0; i < 10; i++) {
             ForkJoinPool.commonPool().execute(() -> System.out.println(new SecureRandom().nextDouble()));
+            TimeUnit.MILLISECONDS.sleep(new SecureRandom().nextInt(100));
         }
 
         ExecutorService executorService = HawkEyeExecutors.newThreadExecutor("test", 4);
