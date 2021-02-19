@@ -13,6 +13,18 @@
 
     <artifactId>hawk-eye-agent-core</artifactId>
     <version>2021.02.18.001</version>
+    <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

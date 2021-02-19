@@ -83,6 +83,7 @@ public class ProtoStuffUtils {
     private ProtoStuffUtils() {
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> Schema<T> getSchema(Class<T> clazz) {
         Schema<T> schema = (Schema<T>) SCHEMA_CACHE.get(clazz);
         if (Objects.isNull(schema)) {
@@ -102,6 +103,7 @@ public class ProtoStuffUtils {
      * @param obj
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> byte[] serialize(T obj) {
         if (Objects.isNull(obj)) {
             throw new IllegalArgumentException("序列化对象参数错误！");
@@ -133,6 +135,7 @@ public class ProtoStuffUtils {
      * @param list
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> byte[] serializeList(List<T> list) {
         if (CollectionUtils.isEmpty(list)) {
             throw new IllegalArgumentException("序列化对象列表参数错误！");
@@ -222,6 +225,7 @@ public class ProtoStuffUtils {
      * @param obj
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> T copy(T obj) {
         if (Objects.isNull(obj)) {
             return null;
@@ -236,6 +240,7 @@ public class ProtoStuffUtils {
      * @param list
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> List<T> copyList(List<T> list) {
         if (CollectionUtils.isEmpty(list)) {
             return Collections.emptyList();

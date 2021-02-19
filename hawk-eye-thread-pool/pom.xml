@@ -13,6 +13,7 @@
 
     <artifactId>hawk-eye-thread-pool</artifactId>
     <version>2021.02.18.001</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

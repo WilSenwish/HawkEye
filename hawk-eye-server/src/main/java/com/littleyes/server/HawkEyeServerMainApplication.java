@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021-02-19
  */
 @EnableAutoConfiguration
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com"})
 public class HawkEyeServerMainApplication {
 
     public static void main(String[] args) {
