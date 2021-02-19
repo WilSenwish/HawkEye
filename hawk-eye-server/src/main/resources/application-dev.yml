@@ -1,0 +1,18 @@
+---
+# Project 端口与上下文路径设置
+server:
+  port: 8081
+
+
+---
+# Spring
+spring:
+  application.name: hawk-eye-server
+
+
+---
+# Logging 日志配置
+logback:
+  level: DEBUG
+  # 日志目录（需要有读写权限）
+  path: logs
