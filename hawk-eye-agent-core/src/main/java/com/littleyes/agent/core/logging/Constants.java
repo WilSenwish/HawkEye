@@ -16,11 +16,6 @@ public interface Constants {
     int BUFFER_QUEUE_MAX_CAPACITY = 1 << 14;
 
     /**
-     * 批量提交日志数量：{@value}
-     */
-    int BUFFER_PROCESS_SIZE = 20;
-
-    /**
      * 监控日志分隔符：{@value}
      */
     String MONITOR_SEPARATOR = "@^@";

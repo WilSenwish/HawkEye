@@ -1,4 +1,4 @@
-package com.littleyes.agent.core.dto;
+package com.littleyes.collector.dto;
 
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.util.IpUtils;

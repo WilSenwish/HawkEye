@@ -25,7 +25,9 @@ public class HawkEyeConfigLoader {
 
     public static Properties loadFromClassPath(String resource) throws IOException {
         log.info("{} Load class path resource [{}]", HAWK_EYE_COMMON, resource);
-        return PropertiesLoaderUtils.loadAllProperties(resource);
+        Properties properties = PropertiesLoaderUtils.loadAllProperties(resource);
+        log.info("{} Loaded class path resource [{}]", HAWK_EYE_COMMON, resource);
+        return properties;
     }
 
     public static Properties loadFromFileSystem(String configRoot, String resource) throws IOException {
@@ -35,6 +37,7 @@ public class HawkEyeConfigLoader {
         log.info("{} Load file system resource [{}]", HAWK_EYE_COMMON, resource);
         try (InputStream is = new FileInputStream(resource)) {
             properties.load(is);
+            log.info("{} Loaded file system resource [{}]", HAWK_EYE_COMMON, resource);
         }
 
         return properties;

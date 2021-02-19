@@ -14,5 +14,24 @@
     <artifactId>hawk-eye-collector</artifactId>
     <version>2021.02.18.001</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>

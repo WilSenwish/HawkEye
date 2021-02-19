@@ -1,8 +1,8 @@
-package com.littleyes.agent.core.logging;
+package com.littleyes.collector.worker;
 
-import com.littleyes.agent.core.dto.BaseDto;
-import com.littleyes.agent.core.dto.LoggingLogDto;
-import com.littleyes.agent.core.spi.LoggingLogDelivery;
+import com.littleyes.collector.dto.BaseDto;
+import com.littleyes.collector.dto.LoggingLogDto;
+import com.littleyes.collector.spi.LoggingLogDelivery;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.ep.EpLoader;
 import com.littleyes.common.util.HawkEyeCollectionUtils;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static com.littleyes.agent.core.logging.Constants.BUFFER_PROCESS_SIZE;
-import static com.littleyes.agent.core.logging.Constants.HAWK_EYE_AGENT;
+import static com.littleyes.collector.util.Constants.BUFFER_PROCESS_SIZE;
+import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
 
 /**
  * <p> <b> 监控日志收集任务线程 </b> </p>
@@ -45,7 +45,7 @@ public class LoggingCollectWorker extends Thread {
             interrupted = true;
         }
 
-        log.info("{} {} running...", HAWK_EYE_AGENT, getName());
+        log.info("{} {} running...", HAWK_EYE_COLLECTOR, getName());
 
         List<LoggingLogDto> loggingLogs = new LinkedList<>();
 
@@ -66,14 +66,14 @@ public class LoggingCollectWorker extends Thread {
                 } catch (InterruptedException ignore) {
                     break;
                 } catch (Exception e) {
-                    log.error("{} Process logging log error {}", HAWK_EYE_AGENT, e.getMessage(), e);
+                    log.error("{} Process logging log error {}", HAWK_EYE_COLLECTOR, e.getMessage(), e);
                 }
 
                 loggingLogs.clear();
             }
         }
 
-        log.error("{} {} will exit!!!", HAWK_EYE_AGENT, getName());
+        log.error("{} {} will exit!!!", HAWK_EYE_COLLECTOR, getName());
 
         try {
             bufferQueue.drainTo(loggingLogs, BUFFER_PROCESS_SIZE);
@@ -81,7 +81,7 @@ public class LoggingCollectWorker extends Thread {
                 sendLogs(loggingLogs);
             }
         } catch (Exception e) {
-            log.error("{} {}", HAWK_EYE_AGENT, e.getMessage(), e);
+            log.error("{} {}", HAWK_EYE_COLLECTOR, e.getMessage(), e);
         } finally {
             loggingLogs.clear();
         }
@@ -93,7 +93,7 @@ public class LoggingCollectWorker extends Thread {
 
             EpLoader.of(LoggingLogDelivery.class).load().deliver(loggingLogs);
         } catch (Exception e) {
-            log.error("{} send logs error", HAWK_EYE_AGENT, e);
+            log.error("{} send logs error", HAWK_EYE_COLLECTOR, e);
         }
     }
 
