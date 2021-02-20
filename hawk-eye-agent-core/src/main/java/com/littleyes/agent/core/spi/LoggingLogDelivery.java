@@ -1,6 +1,6 @@
 package com.littleyes.agent.core.spi;
 
-import com.littleyes.agent.core.dto.LoggingLogDto;
+import com.littleyes.collector.dto.LoggingLogDto;
 import com.littleyes.common.ep.SPI;
 
 import java.util.List;
