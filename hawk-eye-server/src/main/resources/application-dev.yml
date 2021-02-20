@@ -16,3 +16,7 @@ logback:
   level: DEBUG
   # 日志目录（需要有读写权限）
   path: ../logs
+
+
+---
+hawk-eye.plugin.api-filter: enabled

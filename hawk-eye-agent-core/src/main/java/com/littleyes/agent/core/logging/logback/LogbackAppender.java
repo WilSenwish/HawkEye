@@ -23,7 +23,7 @@ import static com.littleyes.agent.core.logging.Constants.BUFFER_MAX_CAPACITY;
 import static com.littleyes.agent.core.logging.Constants.HAWK_EYE_AGENT;
 
 /**
- * <p> <b>Logback 日志 Appender</b> </p>
+ * <p> <b> Logback 日志 Appender </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-19
@@ -147,11 +147,14 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
     private LoggingLogDto buildLoggingLog(ILoggingEvent event) {
         LoggingLogDto loggingLog = new LoggingLogDto();
 
+        // 链路信息
+        loggingLog.setTraceId(TraceContext.traceId());
+
         // Log 本身信息
         loggingLog.setTimestamp(event.getTimeStamp());
-        loggingLog.setThreadName(Thread.currentThread().getName());
         loggingLog.setLogLevel(event.getLevel().toInt());
         loggingLog.setLogLevelStr(event.getLevel().toString());
+        loggingLog.setThreadName(Thread.currentThread().getName());
 
         // 日志发生坐标信息
         StackTraceElement stackTrace = getLastStackTrace(event);
@@ -168,9 +171,6 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
             loggingLog.setThrowableName(throwableProxy.getClassName());
             loggingLog.setThrowableStackTrace(throwableStackTrace.toString());
         }
-
-        // 链路信息
-        loggingLog.setTraceId(TraceContext.traceId());
 
         return loggingLog;
     }

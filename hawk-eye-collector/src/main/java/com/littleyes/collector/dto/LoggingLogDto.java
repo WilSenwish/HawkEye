@@ -15,9 +15,9 @@ public class LoggingLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String threadName;
     private Integer logLevel;
     private String logLevelStr;
+    private String threadName;
     private String className;
     private String methodName;
     private Integer lineNumber;
