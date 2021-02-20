@@ -35,6 +35,12 @@ public class BaseDto implements Serializable {
     public void initBase() {
         projectName = HawkEyeConfig.getProjectName();
         serverIp    = IpUtils.getLocalIp();
+
+        if (Objects.isNull(timestamp)) {
+            timestamp   = System.currentTimeMillis();
+            // TODO format: 20210219175858001
+            time        = timestamp;
+        }
     }
 
 }

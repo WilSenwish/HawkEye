@@ -8,7 +8,7 @@ import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.util.InterruptUtil;
 import com.littleyes.agent.core.logging.Constants;
 import com.littleyes.collector.dto.LoggingLogDto;
-import com.littleyes.collector.worker.LoggingCollectWorker;
+import com.littleyes.collector.worker.HawkEyeLoggingCollector;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.JsonUtils;
@@ -34,7 +34,7 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
     private static final BlockingQueue<LoggingLogDto> BUFFER_QUEUE = new ArrayBlockingQueue<>(BUFFER_QUEUE_MAX_CAPACITY);
 
-    private static LoggingCollectWorker loggingCollectWorker;
+    private static HawkEyeLoggingCollector hawkEyeLoggingCollector;
     private static final long COLLECTOR_MAX_FLUSH_TIME = 2000L;
 
     private static Level logCollectLevel = Level.toLevel(HawkEyeConfig.getLoggingCollectLevel(), Level.INFO);
@@ -56,13 +56,12 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
         addInfo("LogbackAppender Starting...");
 
-        if (Objects.isNull(loggingCollectWorker)) {
-            loggingCollectWorker = new LoggingCollectWorker(BUFFER_QUEUE);
-            loggingCollectWorker.setName("HawkEyeLoggingCollectWorker");
+        if (Objects.isNull(hawkEyeLoggingCollector)) {
+            hawkEyeLoggingCollector = new HawkEyeLoggingCollector(BUFFER_QUEUE);
         }
 
         super.start();
-        loggingCollectWorker.start();
+        hawkEyeLoggingCollector.start();
 
         addInfo("LogbackAppender Started.");
     }
@@ -85,27 +84,29 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         // and sub-appenders consume the interruption
         super.stop();
 
-        // interrupt the runner thread so that it can terminate. Note that the interruption can be consumed
-        // by sub-appenders
-        loggingCollectWorker.interrupt();
+        if (Objects.nonNull(hawkEyeLoggingCollector)) {
+            // interrupt the runner thread so that it can terminate. Note that the interruption can be consumed
+            // by sub-appenders
+            hawkEyeLoggingCollector.interrupt();
 
-        InterruptUtil interruptUtil = new InterruptUtil(context);
-        try {
-            interruptUtil.maskInterruptFlag();
-            loggingCollectWorker.join(COLLECTOR_MAX_FLUSH_TIME);
+            InterruptUtil interruptUtil = new InterruptUtil(context);
+            try {
+                interruptUtil.maskInterruptFlag();
+                hawkEyeLoggingCollector.join(COLLECTOR_MAX_FLUSH_TIME);
 
-            // check to see if the thread ended and if not add a warning message
-            if (loggingCollectWorker.isAlive()) {
-                addWarn("Max queue flush timeout (" + COLLECTOR_MAX_FLUSH_TIME + " ms) exceeded. Approximately "
-                        + BUFFER_QUEUE.size() + " queued events were possibly discarded!!!");
-            } else {
-                addInfo("Queue flush finished successfully within timeout.");
+                // check to see if the thread ended and if not add a warning message
+                if (hawkEyeLoggingCollector.isAlive()) {
+                    addWarn("Max queue flush timeout (" + COLLECTOR_MAX_FLUSH_TIME + " ms) exceeded. Approximately "
+                            + BUFFER_QUEUE.size() + " queued events were possibly discarded!!!");
+                } else {
+                    addInfo("Queue flush finished successfully within timeout.");
+                }
+            } catch (InterruptedException e) {
+                int remaining = BUFFER_QUEUE.size();
+                addError("Failed to join runner thread. " + remaining + " queued events may be discarded!!!", e);
+            } finally {
+                interruptUtil.unmaskInterruptFlag();
             }
-        } catch (InterruptedException e) {
-            int remaining = BUFFER_QUEUE.size();
-            addError("Failed to join runner thread. " + remaining + " queued events may be discarded!!!", e);
-        } finally {
-            interruptUtil.unmaskInterruptFlag();
         }
 
         addInfo("LogbackAppender Stopped.");
@@ -117,8 +118,8 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
             return;
         }
 
-        if (!loggingCollectWorker.isAlive()) {
-            addError("!!!" + loggingCollectWorker.getName() + " died!!!");
+        if (Objects.isNull(hawkEyeLoggingCollector) || !hawkEyeLoggingCollector.isAlive()) {
+            addError("!!!" + hawkEyeLoggingCollector.getName() + " not started or died!!!");
             return;
         }
 
@@ -145,8 +146,6 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
         // Log 本身信息
         loggingLog.setTimestamp(event.getTimeStamp());
-        // TODO format: 20210219175858001
-        loggingLog.setTime(loggingLog.getTimestamp());
         loggingLog.setThreadName(Thread.currentThread().getName());
         loggingLog.setLogLevel(event.getLevel().toInt());
         loggingLog.setLogLevelStr(event.getLevel().toString());

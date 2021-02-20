@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.littleyes.collector.util.Constants.BUFFER_PROCESS_SIZE;
 import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
@@ -23,11 +24,12 @@ import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
  * @date 2021-02-19
  */
 @Slf4j
-public class LoggingCollectWorker extends Thread {
+public class HawkEyeLoggingCollector extends Thread {
 
     private final BlockingQueue<LoggingLogDto> bufferQueue;
 
-    public LoggingCollectWorker(BlockingQueue<LoggingLogDto> bufferQueue) {
+    public HawkEyeLoggingCollector(BlockingQueue<LoggingLogDto> bufferQueue) {
+        super("HawkEyeLoggingCollector");
         this.bufferQueue = bufferQueue;
     }
 
@@ -40,7 +42,7 @@ public class LoggingCollectWorker extends Thread {
         boolean interrupted = false;
 
         try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(3L);
         } catch (InterruptedException e) {
             interrupted = true;
         }
@@ -89,9 +91,8 @@ public class LoggingCollectWorker extends Thread {
 
     private void sendLogs(List<LoggingLogDto> loggingLogs) {
         try {
-            loggingLogs.parallelStream().forEach(BaseDto::initBase);
-
-            PluginLoader.of(LoggingLogDelivery.class).load().deliver(loggingLogs);
+            PluginLoader.of(LoggingLogDelivery.class).load()
+                    .deliver(loggingLogs.parallelStream().peek(BaseDto::initBase).collect(Collectors.toList()));
         } catch (Exception e) {
             log.error("{} send logs error", HAWK_EYE_COLLECTOR, e);
         }
