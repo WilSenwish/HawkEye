@@ -32,6 +32,4 @@ public class LoggingLogDto extends BaseDto implements Serializable {
      */
     private String throwableStackTrace;
 
-    private String traceId;
-
 }

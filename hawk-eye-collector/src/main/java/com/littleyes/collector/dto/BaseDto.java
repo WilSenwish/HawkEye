@@ -18,6 +18,7 @@ public class BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String traceId;
     private String projectName;
     private String serverIp;
     private Long timestamp;
