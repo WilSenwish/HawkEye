@@ -1,4 +1,4 @@
-package com.littleyes.common.ep;
+package com.littleyes.common.core;
 
 import lombok.extern.slf4j.Slf4j;
 

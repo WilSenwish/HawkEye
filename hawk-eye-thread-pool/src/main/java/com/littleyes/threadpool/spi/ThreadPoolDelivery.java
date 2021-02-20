@@ -1,6 +1,6 @@
 package com.littleyes.threadpool.spi;
 
-import com.littleyes.common.ep.SPI;
+import com.littleyes.common.core.SPI;
 import com.littleyes.threadpool.util.ThreadPoolExecutorInfo;
 import com.littleyes.threadpool.util.ThreadPoolExecutorStat;
 

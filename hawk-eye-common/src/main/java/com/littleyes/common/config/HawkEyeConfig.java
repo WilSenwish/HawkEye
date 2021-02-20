@@ -14,7 +14,7 @@ import java.util.Properties;
 @Slf4j
 public class HawkEyeConfig {
 
-    public static final String HAWK_EYE_COMMON      = "|HawkEyeCommon ===> |";
+    public static final String HAWK_EYE_COMMON      = "@HawkEyeCommon ===> |";
     private static final String CONF_RESOURCE_DIR   = "hawk-eye-config.root";
     private static final String CONF_RESOURCE_NAME  = "hawk-eye-config.properties";
     private static final String GIT_RESOURCE_NAME   = "git.properties";

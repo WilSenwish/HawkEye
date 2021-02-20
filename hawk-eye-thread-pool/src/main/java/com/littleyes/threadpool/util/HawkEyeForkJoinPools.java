@@ -1,6 +1,6 @@
 package com.littleyes.threadpool.util;
 
-import com.littleyes.common.ep.PluginLoader;
+import com.littleyes.common.core.PluginLoader;
 import com.littleyes.common.util.SystemRuntime;
 import com.littleyes.threadpool.core.HawkEyeThreadFactory;
 import com.littleyes.threadpool.spi.ThreadPoolDelivery;

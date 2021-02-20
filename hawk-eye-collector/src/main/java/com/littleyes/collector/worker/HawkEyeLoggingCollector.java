@@ -4,7 +4,7 @@ import com.littleyes.collector.dto.BaseDto;
 import com.littleyes.collector.dto.LoggingLogDto;
 import com.littleyes.collector.spi.LoggingLogDelivery;
 import com.littleyes.common.config.HawkEyeConfig;
-import com.littleyes.common.ep.PluginLoader;
+import com.littleyes.common.core.PluginLoader;
 import com.littleyes.common.util.HawkEyeCollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 

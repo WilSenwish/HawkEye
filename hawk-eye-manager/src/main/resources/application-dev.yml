@@ -15,4 +15,4 @@ spring:
 logback:
   level: DEBUG
   # 日志目录（需要有读写权限）
-  path: logs
+  path: ../logs

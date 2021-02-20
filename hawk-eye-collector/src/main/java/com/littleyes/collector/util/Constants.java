@@ -8,7 +8,7 @@ package com.littleyes.collector.util;
  */
 public interface Constants {
 
-    String HAWK_EYE_COLLECTOR = "|HawkEyeCollector ===> |";
+    String HAWK_EYE_COLLECTOR = "@HawkEyeCollector ===> |";
 
     /**
      * 批量提交日志数量：{@value}

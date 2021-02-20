@@ -8,7 +8,7 @@ package com.littleyes.threadpool.util;
  */
 public interface Constants {
 
-    String HAWK_EYE_POOL = "|HawkEyePool ===> |";
+    String HAWK_EYE_POOL = "@HawkEyePool ===> |";
 
     /**
      * default corePoolSize: {@value}

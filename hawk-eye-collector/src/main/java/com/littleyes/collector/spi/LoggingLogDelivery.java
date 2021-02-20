@@ -1,7 +1,7 @@
 package com.littleyes.collector.spi;
 
 import com.littleyes.collector.dto.LoggingLogDto;
-import com.littleyes.common.ep.SPI;
+import com.littleyes.common.core.SPI;
 
 import java.util.List;
 
