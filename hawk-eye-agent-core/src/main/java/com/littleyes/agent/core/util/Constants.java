@@ -1,4 +1,4 @@
-package com.littleyes.agent.core.logging;
+package com.littleyes.agent.core.util;
 
 /**
  * <p> <b> 常量 </b> </p>

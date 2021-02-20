@@ -1,5 +1,6 @@
 package com.littleyes.collector.core;
 
+import com.littleyes.collector.util.Mappings;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.trace.TraceContext;
 
@@ -51,6 +52,11 @@ public class HawkEyeApiFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
             String uri = req.getRequestURI();
+
+            if (Mappings.exclude(uri)) {
+                Mappings.hack(res);
+                return;
+            }
 
             if (HawkEyeConfig.isPerformanceEnabled() && isNotOptions(req) && isIncludePath(uri)) {
                 this.doFilterInternal(req, res, chain);

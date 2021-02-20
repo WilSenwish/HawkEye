@@ -6,7 +6,7 @@ import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.util.InterruptUtil;
-import com.littleyes.agent.core.logging.Constants;
+import com.littleyes.agent.core.util.Constants;
 import com.littleyes.collector.dto.LoggingLogDto;
 import com.littleyes.collector.worker.HawkEyeLoggingCollector;
 import com.littleyes.common.config.HawkEyeConfig;
@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import static com.littleyes.agent.core.logging.Constants.BUFFER_MAX_CAPACITY;
-import static com.littleyes.agent.core.logging.Constants.HAWK_EYE_AGENT;
+import static com.littleyes.agent.core.util.Constants.BUFFER_MAX_CAPACITY;
+import static com.littleyes.agent.core.util.Constants.HAWK_EYE_AGENT;
 
 /**
  * <p> <b> Logback 日志 Appender </b> </p>
