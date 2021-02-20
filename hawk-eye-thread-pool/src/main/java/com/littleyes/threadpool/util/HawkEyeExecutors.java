@@ -1,6 +1,6 @@
 package com.littleyes.threadpool.util;
 
-import com.littleyes.common.ep.EpLoader;
+import com.littleyes.common.ep.PluginLoader;
 import com.littleyes.common.util.SystemRuntime;
 import com.littleyes.threadpool.core.HawkEyeTaskQueue;
 import com.littleyes.threadpool.core.HawkEyeThreadFactory;
@@ -283,10 +283,10 @@ public class HawkEyeExecutors {
             public void run() {
                 try {
                     if (ThreadPoolExecutorInfo.needThreadPoolExecutorInfo(counter)) {
-                        EpLoader.of(ThreadPoolDelivery.class).load().deliverThreadPoolExecutorInfo(info);
+                        PluginLoader.of(ThreadPoolDelivery.class).load().deliverThreadPoolExecutorInfo(info);
                     }
 
-                    EpLoader.of(ThreadPoolDelivery.class).load()
+                    PluginLoader.of(ThreadPoolDelivery.class).load()
                             .deliverThreadPoolExecutorStat(new ThreadPoolExecutorStat(executor));
                 } finally {
                     counter.incrementAndGet();

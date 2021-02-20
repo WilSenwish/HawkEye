@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
+
 /**
  * <p> <b>ProtoStuff 序列化工具类</b> </p>
  *
@@ -160,7 +162,7 @@ public class ProtoStuffUtils {
                     bos.close();
                 }
             } catch (IOException e) {
-                log.error("HawkEyeCom ===> | {}", e.getMessage(), e);
+                log.error("{} {}", HAWK_EYE_COMMON, e.getMessage(), e);
             }
         }
     }

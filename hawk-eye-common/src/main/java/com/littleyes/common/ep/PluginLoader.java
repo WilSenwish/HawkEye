@@ -10,15 +10,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 
 /**
- * <p> <b> 拓展插件服务加载器 </b> </p>
+ * <p> <b> 插件加载器 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-18
  */
 @Slf4j
-public class EpLoader<T> {
+public class PluginLoader<T> {
 
-    private static final ConcurrentMap<Class<?>, EpLoader<?>> EXTENSION_PLUGIN_LOADERS
+    private static final ConcurrentMap<Class<?>, PluginLoader<?>> EXTENSION_PLUGIN_LOADERS
             = new ConcurrentHashMap<>(64);
 
     private static final ConcurrentMap<Class<?>, Holder<Object>> EXTENSION_PLUGIN_INSTANCES
@@ -28,26 +28,26 @@ public class EpLoader<T> {
 
     private final Class<T> type;
 
-    private EpLoader(Class<T> type) {
+    private PluginLoader(Class<T> type) {
         this.type = type;
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> EpLoader<T> of(Class<T> type) {
+    public static <T> PluginLoader<T> of(Class<T> type) {
         if (type == null) {
-            throw new IllegalArgumentException("Extension Plugin type == null");
+            throw new IllegalArgumentException("Plugin's type == null");
         }
         if (!type.isInterface()) {
-            throw new IllegalArgumentException("Extension Plugin type (" + type + ") is not an interface!");
+            throw new IllegalArgumentException("Plugin's type (" + type + ") is not an interface!");
         }
         if (!type.isAnnotationPresent(SPI.class)) {
-            throw new IllegalStateException("Extension Plugin " + type + " must annotate @" + SPI.class.getName() + "!");
+            throw new IllegalStateException("Plugin's " + type + " must annotate @" + SPI.class.getName() + "!");
         }
 
-        EpLoader<T> loader = (EpLoader<T>) EXTENSION_PLUGIN_LOADERS.get(type);
+        PluginLoader<T> loader = (PluginLoader<T>) EXTENSION_PLUGIN_LOADERS.get(type);
         if (loader == null) {
-            EXTENSION_PLUGIN_LOADERS.putIfAbsent(type, new EpLoader<>(type));
-            loader = (EpLoader<T>) EXTENSION_PLUGIN_LOADERS.get(type);
+            EXTENSION_PLUGIN_LOADERS.putIfAbsent(type, new PluginLoader<>(type));
+            loader = (PluginLoader<T>) EXTENSION_PLUGIN_LOADERS.get(type);
         }
 
         return loader;
@@ -62,9 +62,10 @@ public class EpLoader<T> {
             synchronized (holder) {
                 instance = holder.get();
                 if (instance == null) {
+                    log.info("{} Load plugin of [{}]", HAWK_EYE_COMMON, type);
                     instance = loadExtensionPlugin();
                     holder.set(instance);
-                    log.info("{} Loaded [NO.{}] extension plugin [{}] with provider[{}]",
+                    log.info("{} Loaded [NO.{}] plugin [{}] with provider[{}]",
                             HAWK_EYE_COMMON, counter.incrementAndGet(), type, instance);
                 }
             }
@@ -97,7 +98,7 @@ public class EpLoader<T> {
                 }
             }
 
-            // TODO extra extends for EpFactory
+            // TODO extra extends for PluginFactory
 
             if (!instances.isEmpty()) {
                 Optional<T> t = instances.stream()
@@ -108,10 +109,10 @@ public class EpLoader<T> {
                 }
             }
         } catch (Exception e) {
-            log.error("{} Load extension plugin[{}] with error [{}]", HAWK_EYE_COMMON, type, e.getMessage(), e);
+            log.error("{} Load plugin[{}] with error [{}]", HAWK_EYE_COMMON, type, e.getMessage(), e);
         }
 
-        throw new NullPointerException("Extension Plugin of type[" + type.getName() + "] not found!!!");
+        throw new NullPointerException("Plugin of type[" + type.getName() + "] not found!!!");
     }
 
     private ClassLoader getDefaultClassLoader() {
@@ -133,7 +134,7 @@ public class EpLoader<T> {
 
             if (cl == null) {
                 // No thread context class loader -> use class loader of this class.
-                cl = EpLoader.class.getClassLoader();
+                cl = PluginLoader.class.getClassLoader();
                 if (cl == null) {
                     // getClassLoader() returning null indicates the bootstrap ClassLoader
                     try {

@@ -8,7 +8,7 @@ package com.littleyes.agent.core.logging;
  */
 public interface Constants {
 
-    String HAWK_EYE_AGENT = "HawkEyeAgent ===> |";
+    String HAWK_EYE_AGENT = "|HawkEyeAgent ===> |";
 
     /**
      * Appender 缓存队列最大容量：{@value}
