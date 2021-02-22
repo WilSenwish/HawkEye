@@ -1,1 +1,1 @@
-com.littleyes.collector.spi.impl.NoopLoggingLogDelivery
+com.littleyes.collector.spi.impl.PrintLoggingLogDelivery
