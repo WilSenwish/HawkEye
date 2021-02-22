@@ -34,7 +34,7 @@ public class HawkEyeApiFilterConfiguration {
     public FilterRegistrationBean<Filter> apiFilter() {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
 
-        registration.setFilter(PluginLoader.of(ApiFilterFactory.class).load().filter());
+        registration.setFilter(PluginLoader.of(ApiFilterFactory.class).load().get());
         registration.addUrlPatterns("/*");
         registration.addInitParameter("excludeUrls", excludeUrls);
         registration.addInitParameter("excludePrefixes", excludePrefixes);

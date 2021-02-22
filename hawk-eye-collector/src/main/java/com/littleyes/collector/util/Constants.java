@@ -13,7 +13,7 @@ public interface Constants {
     /**
      * 批量提交日志数量：{@value}
      */
-    int BUFFER_PROCESS_SIZE = 20;
+    int BUFFER_PROCESS_SIZE = 16;
 
     String OPTIONS_METHOD       = "OPTIONS";
     String TRACE_ID_KEY         = "X-HAWK-EYE-TRACE-ID";

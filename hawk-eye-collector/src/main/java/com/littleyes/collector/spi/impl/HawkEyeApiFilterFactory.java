@@ -16,7 +16,7 @@ import javax.servlet.Filter;
 public class HawkEyeApiFilterFactory implements ApiFilterFactory {
 
     @Override
-    public Filter filter() {
+    public Filter get() {
         return new HawkEyeApiFilter();
     }
 

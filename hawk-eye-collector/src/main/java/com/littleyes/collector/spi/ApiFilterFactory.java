@@ -18,6 +18,6 @@ public interface ApiFilterFactory {
      *
      * @return
      */
-    Filter filter();
+    Filter get();
 
 }
