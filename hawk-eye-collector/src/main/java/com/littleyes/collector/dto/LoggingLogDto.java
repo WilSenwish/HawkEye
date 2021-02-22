@@ -1,5 +1,6 @@
 package com.littleyes.collector.dto;
 
+import com.littleyes.common.enums.DateTimeFormatterEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,6 +16,8 @@ public class LoggingLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private long timestamp;
+    private long time;
     private Integer logLevel;
     private String logLevelStr;
     private String threadName;
@@ -31,5 +34,11 @@ public class LoggingLogDto extends BaseDto implements Serializable {
      * 异常栈信息
      */
     private String throwableStackTrace;
+
+    @Override
+    public void initBase() {
+        super.initBase();
+        time = DateTimeFormatterEnum.TIME.format(timestamp);
+    }
 
 }
