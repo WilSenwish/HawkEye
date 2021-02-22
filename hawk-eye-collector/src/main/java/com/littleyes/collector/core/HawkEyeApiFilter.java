@@ -1,7 +1,10 @@
 package com.littleyes.collector.core;
 
+import com.littleyes.collector.buf.PerformanceLogBuffer;
 import com.littleyes.collector.util.Mappings;
+import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.trace.TraceContext;
 
 import javax.servlet.*;
@@ -79,8 +82,16 @@ public class HawkEyeApiFilter implements Filter {
             chain.doFilter(req, res);
             success = true;
         } finally {
-            // TODO
-            System.out.println(req.getRequestURL() + " " + success + " cost " + (System.currentTimeMillis() - start));
+            PerformanceContext context = PerformanceContext.init(
+                    req.getRequestURI(),
+                    req.getMethod(),
+                    PerformanceTypeEnum.API.getType(),
+                    success,
+                    start,
+                    System.currentTimeMillis()
+            );
+            context.setParameters(null);
+            PerformanceLogBuffer.produce(PerformanceTypeEnum.API.getType());
         }
     }
 

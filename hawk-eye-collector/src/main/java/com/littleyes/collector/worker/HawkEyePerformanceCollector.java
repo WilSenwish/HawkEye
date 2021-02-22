@@ -1,6 +1,5 @@
 package com.littleyes.collector.worker;
 
-import com.littleyes.collector.dto.BaseDto;
 import com.littleyes.collector.dto.PerformanceLogDto;
 import com.littleyes.collector.spi.PerformanceLogDelivery;
 import com.littleyes.common.config.HawkEyeConfig;
@@ -92,7 +91,7 @@ public class HawkEyePerformanceCollector extends Thread {
     private void sendLogs(List<PerformanceLogDto> performanceLogs) {
         try {
             PluginLoader.of(PerformanceLogDelivery.class).load()
-                    .deliver(performanceLogs.parallelStream().peek(BaseDto::initBase).collect(Collectors.toList()));
+                    .deliver(performanceLogs.parallelStream().peek(PerformanceLogDto::initBase).collect(Collectors.toList()));
         } catch (Exception e) {
             log.error("{} send logs error", HAWK_EYE_COLLECTOR, e);
         }

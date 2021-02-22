@@ -20,6 +20,16 @@
             <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.mybatis</groupId>

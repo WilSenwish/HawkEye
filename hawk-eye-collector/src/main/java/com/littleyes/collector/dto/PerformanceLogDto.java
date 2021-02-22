@@ -1,5 +1,6 @@
 package com.littleyes.collector.dto;
 
+import com.littleyes.common.enums.DateTimeFormatterEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,13 +18,20 @@ public class PerformanceLogDto extends BaseDto implements Serializable {
 
     private String event;
     private String method;
-    private Integer type;
-    private Boolean success;
-    private Long start;
-    private Long end;
-    private Long minute;
-    private Long timeConsume;
+    private int type;
+    private boolean success;
+    private long start;
+    private long end;
+    private long minute;
+    private long timeConsume;
 
     private String body;
+
+    @Override
+    public void initBase() {
+        super.initBase();
+        minute      = DateTimeFormatterEnum.MINUTE.format(start);
+        timeConsume = end - start;
+    }
 
 }

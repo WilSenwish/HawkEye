@@ -1,6 +1,7 @@
 package com.littleyes.collector.dto;
 
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.IpUtils;
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class BaseDto implements Serializable {
     private String projectName;
     private String serverIp;
     private String traceId;
-    private Boolean debug;
+    private boolean debug;
 
     public String generateGroupKey() {
         if (Objects.nonNull(projectName) && Objects.nonNull(serverIp)) {
@@ -34,6 +35,11 @@ public class BaseDto implements Serializable {
     public void initBase() {
         projectName = HawkEyeConfig.getProjectName();
         serverIp    = IpUtils.getLocalIp();
+    }
+
+    public void initTrace() {
+        traceId = TraceContext.traceId();
+        debug   = TraceContext.traceDebugEnabled();
     }
 
 }

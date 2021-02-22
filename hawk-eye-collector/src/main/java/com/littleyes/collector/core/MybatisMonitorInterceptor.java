@@ -1,6 +1,9 @@
 package com.littleyes.collector.core;
 
+import com.littleyes.collector.buf.PerformanceLogBuffer;
+import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.enums.PerformanceTypeEnum;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -51,12 +54,19 @@ public class MybatisMonitorInterceptor implements Interceptor {
         String sql = extractSql(invocation, mappedStatement);
 
         try {
-            // TODO
             returnObj = invocation.proceed();
             success = true;
         } finally {
-            // TODO
-            System.out.println(mappedStatement.getId() + " " + success + " cost " + (System.currentTimeMillis() - start));
+            PerformanceContext context = PerformanceContext.init(
+                    mappedStatement.getId(),
+                    commandType,
+                    PerformanceTypeEnum.MYSQL.getType(),
+                    success,
+                    start,
+                    System.currentTimeMillis()
+            );
+            context.setSql(sql);
+            PerformanceLogBuffer.produce(PerformanceTypeEnum.MYSQL.getType());
         }
 
         return returnObj;
