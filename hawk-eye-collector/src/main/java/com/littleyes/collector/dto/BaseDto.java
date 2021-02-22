@@ -21,6 +21,7 @@ public class BaseDto implements Serializable {
 
     private String projectName;
     private String serverIp;
+    private String threadName;
     private String traceId;
     private boolean debug;
 
@@ -38,8 +39,9 @@ public class BaseDto implements Serializable {
     }
 
     public void initTrace() {
-        traceId = TraceContext.traceId();
-        debug   = TraceContext.traceDebugEnabled();
+        threadName  = Thread.currentThread().getName();
+        traceId     = TraceContext.traceId();
+        debug       = TraceContext.traceDebugEnabled();
     }
 
 }

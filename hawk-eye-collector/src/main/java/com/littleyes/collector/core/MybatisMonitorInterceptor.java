@@ -66,7 +66,7 @@ public class MybatisMonitorInterceptor implements Interceptor {
                     System.currentTimeMillis()
             );
             context.setSql(sql);
-            PerformanceLogBuffer.produce(PerformanceTypeEnum.MYSQL.getType());
+            PerformanceLogBuffer.log(PerformanceTypeEnum.MYSQL.getType());
         }
 
         return returnObj;

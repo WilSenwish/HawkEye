@@ -94,7 +94,6 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         loggingLog.setTimestamp(event.getTimeStamp());
         loggingLog.setLogLevel(event.getLevel().toInt());
         loggingLog.setLogLevelStr(event.getLevel().toString());
-        loggingLog.setThreadName(Thread.currentThread().getName());
 
         // 日志发生坐标信息
         StackTraceElement stackTrace = getLastStackTrace(event);

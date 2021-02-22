@@ -45,14 +45,14 @@ public class PerformanceLogBuffer {
         hawkEyePerformanceCollector.start();
     }
 
-    public static void produce(int type) {
+    public static void log(int type) {
         if (HawkEyeConfig.isPerformanceDisabled()) {
             log.info("{} Performance monitor disabled!!!", HAWK_EYE_COLLECTOR);
             return;
         }
 
-        if (!hawkEyePerformanceCollector.isAlive()) {
-            log.info("{} {} died!!!", HAWK_EYE_COLLECTOR, hawkEyePerformanceCollector.getName());
+        if (Objects.isNull(hawkEyePerformanceCollector) || !hawkEyePerformanceCollector.isAlive()) {
+            log.info("{} {} not started or died!!!", HAWK_EYE_COLLECTOR, hawkEyePerformanceCollector.getName());
             return;
         }
 

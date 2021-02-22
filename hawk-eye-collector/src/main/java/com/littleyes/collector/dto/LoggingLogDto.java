@@ -20,7 +20,6 @@ public class LoggingLogDto extends BaseDto implements Serializable {
     private long time;
     private int logLevel;
     private String logLevelStr;
-    private String threadName;
     private String className;
     private String methodName;
     private int lineNumber;

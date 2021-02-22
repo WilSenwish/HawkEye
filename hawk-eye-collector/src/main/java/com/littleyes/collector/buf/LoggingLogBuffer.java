@@ -50,8 +50,8 @@ public class LoggingLogBuffer {
             return;
         }
 
-        if (!hawkEyeLoggingCollector.isAlive()) {
-            log.info("{} {} died!!!", HAWK_EYE_COLLECTOR, hawkEyeLoggingCollector.getName());
+        if (Objects.isNull(hawkEyeLoggingCollector) || !hawkEyeLoggingCollector.isAlive()) {
+            log.info("{} {} not started or died!!!", HAWK_EYE_COLLECTOR, hawkEyeLoggingCollector.getName());
             return;
         }
 

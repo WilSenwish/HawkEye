@@ -92,7 +92,7 @@ public class HawkEyeApiFilter implements Filter {
                     System.currentTimeMillis()
             );
             context.setParameters(RequestParamUtils.map(req));
-            PerformanceLogBuffer.produce(PerformanceTypeEnum.API.getType());
+            PerformanceLogBuffer.log(PerformanceTypeEnum.API.getType());
         }
     }
 
