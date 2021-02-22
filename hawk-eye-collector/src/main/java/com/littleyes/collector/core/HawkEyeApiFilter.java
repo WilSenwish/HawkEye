@@ -6,6 +6,7 @@ import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.trace.TraceContext;
+import com.littleyes.common.util.RequestParamUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -90,7 +91,7 @@ public class HawkEyeApiFilter implements Filter {
                     start,
                     System.currentTimeMillis()
             );
-            context.setParameters(null);
+            context.setParameters(RequestParamUtils.map(req));
             PerformanceLogBuffer.produce(PerformanceTypeEnum.API.getType());
         }
     }

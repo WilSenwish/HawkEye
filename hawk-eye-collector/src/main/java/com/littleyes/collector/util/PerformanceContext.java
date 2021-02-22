@@ -33,7 +33,7 @@ public class PerformanceContext {
     @Setter
     private String sql;
     @Setter
-    private Map<String, String> parameters = Collections.emptyMap();
+    private Map<String, Object> parameters = Collections.emptyMap();
 
     private String getBody() {
         if (PerformanceTypeEnum.API.getType().equals(type)) {
