@@ -40,3 +40,4 @@ logback:
 
 ---
 hawk-eye.plugin.api-filter: enabled
+hawk-eye.plugin.mybatis-interceptor: enabled

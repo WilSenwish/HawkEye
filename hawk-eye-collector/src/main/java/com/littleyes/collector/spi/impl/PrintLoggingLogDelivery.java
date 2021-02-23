@@ -3,6 +3,7 @@ package com.littleyes.collector.spi.impl;
 import com.littleyes.collector.dto.LoggingLogDto;
 import com.littleyes.collector.spi.LoggingLogDelivery;
 import com.littleyes.common.core.SPI;
+import com.littleyes.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -19,10 +20,18 @@ import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
 @Slf4j
 public class PrintLoggingLogDelivery implements LoggingLogDelivery {
 
+    private static final String PREFIX = HAWK_EYE_COLLECTOR + " Logging [";
+
     @Override
     public void deliver(List<LoggingLogDto> loggingLogs) {
         if (log.isDebugEnabled()) {
-            log.debug("{} Logging log size [{}]", HAWK_EYE_COLLECTOR, loggingLogs.size());
+            loggingLogs.forEach(l -> {
+                if (l.getLoggingMessage().startsWith(PREFIX)) {
+                    return;
+                }
+
+                log.debug("{} Logging [{}]", HAWK_EYE_COLLECTOR, JsonUtils.toString(l));
+            });
         }
     }
 

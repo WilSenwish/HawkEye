@@ -3,6 +3,7 @@ package com.littleyes.collector.spi.impl;
 import com.littleyes.collector.dto.PerformanceLogDto;
 import com.littleyes.collector.spi.PerformanceLogDelivery;
 import com.littleyes.common.core.SPI;
+import com.littleyes.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class PrintPerformanceLogDelivery implements PerformanceLogDelivery {
     @Override
     public void deliver(List<PerformanceLogDto> performanceLogs) {
         if (log.isDebugEnabled()) {
-            log.debug("{} Performance log size [{}]", HAWK_EYE_COLLECTOR, performanceLogs.size());
+            performanceLogs.forEach(l -> log.debug("{} Logging [{}]", HAWK_EYE_COLLECTOR, JsonUtils.toString(l)));
         }
     }
 
