@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.littleyes</groupId>
+        <artifactId>hawk-eye</artifactId>
+        <version>2021.02.18.001</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>hawk-eye-storage-mysql</artifactId>
+    <version>2021.02.18.001</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-storage</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**.*</include>
+                    <include>**/*.*</include>
+                    <include>**/**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

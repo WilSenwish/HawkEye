@@ -4,13 +4,33 @@ server:
   port: 8080
 
 
----
 # Spring
 spring:
-  application.name: hawk-eye-server
+  application.name: hawk-eye-manager
+  datasource.druid:
+    url: jdbc:mysql:///hawk_eye?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Root123456
+    max-active: 100
+    min-idle: 20
+    initial-size: 10
+    pool-prepared-statements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    max-open-prepared-statements: 50
+    max-wait: 60000
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 'x'
 
 
----
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath*:mappers/*Mapper.xml
+
+
 # Logging 日志配置
 logback:
   level: DEBUG
