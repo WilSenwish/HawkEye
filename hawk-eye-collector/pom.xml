@@ -20,6 +20,7 @@
             <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-common</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
