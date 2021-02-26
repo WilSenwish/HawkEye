@@ -45,6 +45,9 @@ public final class GarbageCollectorMetricProvider {
         log.info("{} Current GarbageCollectorMetricAccessor [{}]", HAWK_EYE_AGENT, metricAccessor);
     }
 
+    private GarbageCollectorMetricProvider() {
+    }
+
     public static List<GarbageCollectorMetric> getGarbageCollectorMetricList() {
         return metricAccessor.getGarbageCollectorMetricList();
     }
