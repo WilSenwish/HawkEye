@@ -62,7 +62,13 @@ public abstract class BaseGarbageCollectorMetricAccessor implements GarbageColle
                 continue;
             }
 
-            garbageCollectorMetricList.add(GarbageCollectorMetric.builder().phrase(phrase).count(gcCount).time(gcTime).build());
+            garbageCollectorMetricList.add(
+                    GarbageCollectorMetric.builder()
+                            .phrase(phrase)
+                            .count(gcCount)
+                            .time(gcTime)
+                            .build()
+            );
         }
 
         log.debug("ygcc:{}, ygct:{}, ogcc:{}, ogct:{}",

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class ParallelGarbageCollectorMetricAccessor extends BaseGarbageCollectorMetricAccessor {
 
-    public static final String PARALLEL_MARKER = "PS";
+    public static final String PARALLEL_GC_MARKER = "PS";
 
     public ParallelGarbageCollectorMetricAccessor(List<GarbageCollectorMXBean> gcMxBeans) {
         super(gcMxBeans);
@@ -21,12 +21,12 @@ public final class ParallelGarbageCollectorMetricAccessor extends BaseGarbageCol
 
     @Override
     protected String getMinorGarbageCollectorName() {
-        return PARALLEL_MARKER + " Scavenge";
+        return PARALLEL_GC_MARKER + " Scavenge";
     }
 
     @Override
     protected String getMajorGarbageCollectorName() {
-        return PARALLEL_MARKER + " MarkSweep";
+        return PARALLEL_GC_MARKER + " MarkSweep";
     }
 
 }

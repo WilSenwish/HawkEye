@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class G1GarbageCollectorMetricAccessor extends BaseGarbageCollectorMetricAccessor {
 
-    public static final String G1_MARKER = "G1";
+    public static final String G1_GC_MARKER = "G1";
 
     public G1GarbageCollectorMetricAccessor(List<GarbageCollectorMXBean> gcMxBeans) {
         super(gcMxBeans);
@@ -21,12 +21,12 @@ public final class G1GarbageCollectorMetricAccessor extends BaseGarbageCollector
 
     @Override
     protected String getMinorGarbageCollectorName() {
-        return G1_MARKER + " Young Generation";
+        return G1_GC_MARKER + " Young Generation";
     }
 
     @Override
     protected String getMajorGarbageCollectorName() {
-        return G1_MARKER + " Old Generation";
+        return G1_GC_MARKER + " Old Generation";
     }
 
 }

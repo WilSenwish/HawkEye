@@ -23,14 +23,10 @@ public final class ThreadMetricProvider {
     }
 
     public static ThreadMetric getThreadMetric() {
-        int liveThreadCount = threadMXBean.getThreadCount();
-        int peakThreadCount = threadMXBean.getPeakThreadCount();
-        int daemonThreadCount = threadMXBean.getDaemonThreadCount();
-
         return ThreadMetric.builder()
-                .liveThreadCount(liveThreadCount)
-                .peakThreadCount(peakThreadCount)
-                .daemonThreadCount(daemonThreadCount)
+                .liveThreadCount(threadMXBean.getThreadCount())
+                .peakThreadCount(threadMXBean.getPeakThreadCount())
+                .daemonThreadCount(threadMXBean.getDaemonThreadCount())
                 .build();
     }
 

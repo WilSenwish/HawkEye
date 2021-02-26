@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class CMSGarbageCollectorMetricAccessor extends BaseGarbageCollectorMetricAccessor {
 
-    public static final String CMS_MARKER = "ConcurrentMarkSweep";
+    public static final String CMS_GC_MARKER = "ConcurrentMarkSweep";
 
     public CMSGarbageCollectorMetricAccessor(List<GarbageCollectorMXBean> gcMxBeans) {
         super(gcMxBeans);
@@ -26,7 +26,7 @@ public final class CMSGarbageCollectorMetricAccessor extends BaseGarbageCollecto
 
     @Override
     protected String getMajorGarbageCollectorName() {
-        return CMS_MARKER;
+        return CMS_GC_MARKER;
     }
 
 }

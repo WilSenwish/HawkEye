@@ -9,10 +9,10 @@ import java.lang.management.ManagementFactory;
 import java.util.List;
 import java.util.Objects;
 
-import static com.littleyes.agent.core.jvm.gc.impl.CMSGarbageCollectorMetricAccessor.CMS_MARKER;
-import static com.littleyes.agent.core.jvm.gc.impl.G1GarbageCollectorMetricAccessor.G1_MARKER;
-import static com.littleyes.agent.core.jvm.gc.impl.ParallelGarbageCollectorMetricAccessor.PARALLEL_MARKER;
-import static com.littleyes.agent.core.jvm.gc.impl.SerialGarbageCollectorMetricAccessor.SERIAL_MARKER;
+import static com.littleyes.agent.core.jvm.gc.impl.CMSGarbageCollectorMetricAccessor.CMS_GC_MARKER;
+import static com.littleyes.agent.core.jvm.gc.impl.G1GarbageCollectorMetricAccessor.G1_GC_MARKER;
+import static com.littleyes.agent.core.jvm.gc.impl.ParallelGarbageCollectorMetricAccessor.PARALLEL_GC_MARKER;
+import static com.littleyes.agent.core.jvm.gc.impl.SerialGarbageCollectorMetricAccessor.SERIAL_GC_MARKER;
 import static com.littleyes.agent.core.util.Constants.HAWK_EYE_AGENT;
 
 /**
@@ -29,6 +29,7 @@ public final class GarbageCollectorMetricProvider {
 
     static {
         gcMxBeans = ManagementFactory.getGarbageCollectorMXBeans();
+
         for (GarbageCollectorMXBean bean : gcMxBeans) {
             String name = bean.getName();
             log.info("{} Current GarbageCollectorMXBean [{}]", HAWK_EYE_AGENT, bean.getName());
@@ -42,6 +43,7 @@ public final class GarbageCollectorMetricProvider {
         if (Objects.isNull(metricAccessor)) {
             metricAccessor = new UnknownGarbageCollectorMetricAccessor();
         }
+
         log.info("{} Current GarbageCollectorMetricAccessor [{}]", HAWK_EYE_AGENT, metricAccessor);
     }
 
@@ -53,16 +55,16 @@ public final class GarbageCollectorMetricProvider {
     }
 
     private static GarbageCollectorMetricAccessor findByBeanName(String name) {
-        if (name.contains(CMS_MARKER)) {
+        if (name.contains(CMS_GC_MARKER)) {
             // CMS collector ( -XX:+UseConcMarkSweepGC )
             return new CMSGarbageCollectorMetricAccessor(gcMxBeans);
-        } else if (name.contains(G1_MARKER)) {
+        } else if (name.contains(G1_GC_MARKER)) {
             // G1 collector ( -XX:+UseG1GC )
             return new G1GarbageCollectorMetricAccessor(gcMxBeans);
-        } else if (name.contains(PARALLEL_MARKER)) {
+        } else if (name.contains(PARALLEL_GC_MARKER)) {
             //Parallel (Old) collector ( -XX:+UseParallelOldGC )
             return new ParallelGarbageCollectorMetricAccessor(gcMxBeans);
-        } else if (name.contains(SERIAL_MARKER)) {
+        } else if (name.contains(SERIAL_GC_MARKER)) {
             // Serial collector ( -XX:+UseSerialGC )
             return new SerialGarbageCollectorMetricAccessor(gcMxBeans);
         } else {

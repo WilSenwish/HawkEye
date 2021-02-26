@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class SerialGarbageCollectorMetricAccessor extends BaseGarbageCollectorMetricAccessor {
 
-    public static final String SERIAL_MARKER = "MarkSweepCompact";
+    public static final String SERIAL_GC_MARKER = "MarkSweepCompact";
 
     public SerialGarbageCollectorMetricAccessor(List<GarbageCollectorMXBean> gcMxBeans) {
         super(gcMxBeans);
@@ -26,7 +26,7 @@ public final class SerialGarbageCollectorMetricAccessor extends BaseGarbageColle
 
     @Override
     protected String getMajorGarbageCollectorName() {
-        return SERIAL_MARKER;
+        return SERIAL_GC_MARKER;
     }
 
 }
