@@ -1,6 +1,7 @@
 package com.littleyes.agent.core.jvm;
 
 import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.util.JsonUtils;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -19,7 +20,7 @@ public class TestJvmMetricProvider {
                 for (int i = 0; i < 500; i++) {
                     data.add(jvmMetric);
                 }
-                System.out.println(jvmMetric);
+                System.out.println(JsonUtils.toString(jvmMetric));
             });
             TimeUnit.MILLISECONDS.sleep(new SecureRandom().nextInt(500));
         }
