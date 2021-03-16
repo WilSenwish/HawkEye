@@ -3,6 +3,7 @@ package com.littleyes.storage.spi.impl;
 import com.littleyes.common.core.SPI;
 import com.littleyes.storage.spi.ValidateCodeRepository;
 import com.littleyes.storage.util.ValidateCode;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,12 +11,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.littleyes.storage.util.Constants.HAWK_REDIS_STORAGE;
+
 /**
  * <p> <b> AccountRepositoryImpl </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-03-16
  */
+@Slf4j
 @SPI
 public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
 
@@ -53,6 +57,8 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
         synchronized (CODES) {
             CODES.put(key, code);
         }
+
+        log.info("{} KEY[{}] with CODE [{}]", HAWK_REDIS_STORAGE, key, code);
 
         return codeResult;
     }
