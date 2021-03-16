@@ -49,8 +49,8 @@ public class HawkEyeApiFilter implements Filter {
             this.excludePrefixes.addAll(Arrays.asList(configuredExcludePrefixes.split(",")));
         }
 
-        log.info("{} Current {} is {}", HAWK_EYE_COLLECTOR, GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
-        log.info("{} Current {} is {}", HAWK_EYE_COLLECTOR, PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
+        log.info("{} Current [{}] is [{}]", HAWK_EYE_COLLECTOR, GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        log.info("{} Current [{}] is [{}]", HAWK_EYE_COLLECTOR, PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
     }
 
     @Override
