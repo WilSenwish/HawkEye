@@ -46,13 +46,13 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
         String key = UUID.randomUUID().toString();
         String code = RandomStringUtils.randomNumeric(4);
 
-        synchronized (CODES) {
-            CODES.put(key, code);
-        }
-
         Map<String, Object> codeResult = new LinkedHashMap<>();
         codeResult.put("key", key);
         codeResult.put("base64", ValidateCode.generate(code));
+
+        synchronized (CODES) {
+            CODES.put(key, code);
+        }
 
         return codeResult;
     }
