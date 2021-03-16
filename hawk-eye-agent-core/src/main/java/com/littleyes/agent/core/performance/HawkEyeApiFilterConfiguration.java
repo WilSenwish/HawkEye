@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(value = "hawk-eye.plugin.api-filter", havingValue = "enabled")
 public class HawkEyeApiFilterConfiguration {
 
+    private static final int ORDER = Ordered.HIGHEST_PRECEDENCE + 147;
+
     private String excludeUrls      = Collections.unmodifiableList(Arrays.asList("/favicon.ico", "/v2/api-docs")).stream()
             .collect(Collectors.joining(","));
     private String excludePrefixes  = Collections.unmodifiableList(Arrays.asList("/webjars", "/swagger-resources", "/actuator")).stream()
@@ -32,15 +34,17 @@ public class HawkEyeApiFilterConfiguration {
 
     @Bean
     public FilterRegistrationBean<Filter> apiFilter() {
+        Filter filter = PluginLoader.of(ApiFilterFactory.class).load().get();
+
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
 
-        registration.setFilter(PluginLoader.of(ApiFilterFactory.class).load().get());
+        registration.setFilter(filter);
         registration.addUrlPatterns("/*");
         registration.addInitParameter("excludeUrls", excludeUrls);
         registration.addInitParameter("excludePrefixes", excludePrefixes);
         registration.addInitParameter("excludeSuffixes", excludeSuffixes);
-        registration.setName("apiFilter");
-        registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 147);
+        registration.setName(filter.getClass().getSimpleName());
+        registration.setOrder(ORDER);
 
         return registration;
     }

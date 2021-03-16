@@ -7,6 +7,7 @@ import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.RequestParamUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import static com.littleyes.collector.util.Constants.*;
  * @author Junbing.Chen
  * @date 2021-02-20
  */
+@Slf4j
 public class HawkEyeApiFilter implements Filter {
 
     private final Set<String> excludeUrls       = new LinkedHashSet<>();
@@ -46,6 +48,9 @@ public class HawkEyeApiFilter implements Filter {
         if (configuredExcludePrefixes != null) {
             this.excludePrefixes.addAll(Arrays.asList(configuredExcludePrefixes.split(",")));
         }
+
+        log.info("{} Current {} is {}", HAWK_EYE_COLLECTOR, GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        log.info("{} Current {} is {}", HAWK_EYE_COLLECTOR, PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
     }
 
     @Override
@@ -101,6 +106,7 @@ public class HawkEyeApiFilter implements Filter {
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
         res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        res.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
     }
 
     private String extractTraceId(HttpServletRequest req) {
