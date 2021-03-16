@@ -27,9 +27,10 @@ public class ApplicationInitializedListener implements ApplicationListener<Conte
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         monitorJvm();
-        monitorForkJoinPoolOfCommonPool();
 
-        extractRequestMappingForUse(event);
+        extractRequestMapping4Use(event);
+
+        monitorForkJoinPoolOfCommonPool();
     }
 
     private void monitorJvm() {
@@ -40,7 +41,7 @@ public class ApplicationInitializedListener implements ApplicationListener<Conte
         HawkEyeForkJoinPools.monitorForkJoinPoolOfCommonPool();
     }
 
-    private void extractRequestMappingForUse(ContextRefreshedEvent event) {
+    private void extractRequestMapping4Use(ContextRefreshedEvent event) {
         RequestMappingHandlerMapping handlerMapping = event.getApplicationContext()
                 .getBean(RequestMappingHandlerMapping.class);
 
