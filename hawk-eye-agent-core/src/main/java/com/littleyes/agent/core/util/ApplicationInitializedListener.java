@@ -1,5 +1,6 @@
 package com.littleyes.agent.core.util;
 
+import com.littleyes.agent.core.jvm.JvmMetricProvider;
 import com.littleyes.collector.util.Mappings;
 import com.littleyes.threadpool.util.HawkEyeForkJoinPools;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,30 @@ public class ApplicationInitializedListener implements ApplicationListener<Conte
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        HawkEyeForkJoinPools.monitorForkJoinPoolOfCommonPool();
+        monitorJvm();
+        monitorForkJoinPoolOfCommonPool();
 
+        extractRequestMappingForUse(event);
+    }
+
+    private void monitorJvm() {
+        JvmMetricProvider.monitorJvm();
+    }
+
+    private void monitorForkJoinPoolOfCommonPool() {
+        HawkEyeForkJoinPools.monitorForkJoinPoolOfCommonPool();
+    }
+
+    private void extractRequestMappingForUse(ContextRefreshedEvent event) {
         RequestMappingHandlerMapping handlerMapping = event.getApplicationContext()
                 .getBean(RequestMappingHandlerMapping.class);
 
-        List<String> urls = handlerMapping.getHandlerMethods().keySet().stream()
+        List<String> mappings = handlerMapping.getHandlerMethods().keySet().stream()
                 .flatMap(e -> e.getPatternsCondition().getPatterns().stream())
                 .collect(Collectors.toList());
-        Mappings.fill(urls);
-        log.info("{} Application Initialized with mapping size [{}]", HAWK_EYE_AGENT, urls.size());
+        Mappings.fill(mappings);
+
+        log.info("{} Current Application RequestMapping size [{}]", HAWK_EYE_AGENT, mappings.size());
     }
 
 }

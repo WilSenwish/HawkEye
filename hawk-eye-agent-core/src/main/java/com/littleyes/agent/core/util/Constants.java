@@ -11,11 +11,6 @@ public interface Constants {
     String HAWK_EYE_AGENT = "@HawkEyeAgent ===> |";
 
     /**
-     * Appender 缓存队列最大容量：{@value}
-     */
-    int BUFFER_MAX_CAPACITY = 1 << 14;
-
-    /**
      * 监控日志分隔符：{@value}
      */
     String MONITOR_SEPARATOR = "@^@";

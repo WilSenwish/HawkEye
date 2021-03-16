@@ -1,5 +1,6 @@
 package com.littleyes.collector.dto.jvm;
 
+import com.littleyes.collector.dto.BaseDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,7 +17,7 @@ import java.util.List;
 @ToString
 @Getter
 @Builder
-public class JvmMetric implements Serializable {
+public class JvmMetric extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
