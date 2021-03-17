@@ -1,6 +1,7 @@
 package com.littleyes.storage.spi.impl;
 
 import com.littleyes.common.core.SPI;
+import com.littleyes.common.util.LRUCache;
 import com.littleyes.storage.spi.ValidateCodeRepository;
 import com.littleyes.storage.util.ValidateCode;
 import lombok.extern.slf4j.Slf4j;
@@ -25,28 +26,7 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
 
     private static final int CAPACITY = 1 << 10;
 
-    private static final ValidateCodeCache CODES = new ValidateCodeCache(CAPACITY);
-
-    /**
-     * <p> <b> Only for Test or Single Service Usage </b> </p>
-     *
-     * @author Junbing.Chen
-     * @date 2021-03-16
-     */
-    private static class ValidateCodeCache extends LinkedHashMap<String, String> {
-
-        private final int maxCapacity;
-
-        ValidateCodeCache(int maxCapacity) {
-            super(maxCapacity, 1F, true);
-            this.maxCapacity = maxCapacity;
-        }
-
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
-            return size() > maxCapacity;
-        }
-    }
+    private static final LRUCache CODES = new LRUCache(CAPACITY);
 
     @Override
     public Map<String, Object> generate() {
