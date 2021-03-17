@@ -5,6 +5,7 @@ import com.littleyes.common.util.ApiException;
 import com.littleyes.common.util.LRUCache;
 import com.littleyes.manager.query.LoginQuery;
 import com.littleyes.manager.service.AuthService;
+import com.littleyes.manager.util.AccountContext;
 import com.littleyes.storage.entity.AccountModel;
 import com.littleyes.storage.spi.AccountRepository;
 import com.littleyes.storage.spi.ValidateCodeRepository;
@@ -30,10 +31,10 @@ public class AuthServiceImpl implements AuthService {
     private static final int CAPACITY = 1 << 10;
 
     /**
-     * token -> userId <br/>
+     * token -> account <br/>
      * <b>only for test or single service usage without data bak</b>
      */
-    private static final LRUCache<Integer> SESSIONS = new LRUCache<>(CAPACITY);
+    private static final LRUCache<AccountModel> SESSIONS = new LRUCache<>(CAPACITY);
 
     @Override
     public Map<String, Object> login(LoginQuery query) {
@@ -58,10 +59,20 @@ public class AuthServiceImpl implements AuthService {
 
         String token = UUID.randomUUID().toString();
         synchronized (SESSIONS) {
-            SESSIONS.put(token, account.getId());
+            SESSIONS.put(token, account);
         }
 
         return Collections.singletonMap("token", token);
+    }
+
+    @Override
+    public AccountModel getAccountByToken(String token) {
+        return SESSIONS.get(token);
+    }
+
+    @Override
+    public AccountModel getCurrentAccount() {
+        return AccountContext.get();
     }
 
 }

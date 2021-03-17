@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AccountMapper {
 
+    AccountModel selectById(Integer id);
+
     AccountModel selectByUsernameAndPassword(@Param("username") String username,
                                              @Param("password") String password);
 

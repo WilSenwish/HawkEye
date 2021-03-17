@@ -1,5 +1,6 @@
 package com.littleyes.collector.util;
 
+import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.util.ApiResponse;
 import com.littleyes.common.util.JsonUtils;
 
@@ -8,6 +9,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.littleyes.collector.util.Constants.GIT_COMMIT_ID_KEY;
+import static com.littleyes.collector.util.Constants.PROJECT_NAME_KEY;
 
 /**
  * <p> <b> API Mapping </b> </p>
@@ -32,7 +36,11 @@ public class Mappings {
     }
 
     public static void hack(HttpServletResponse response) throws IOException {
-        response.getWriter().write(JsonUtils.toString(ApiResponse.failure("Wanna Hack ME")));
+        response.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        response.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
+
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        response.getWriter().write(JsonUtils.toString(ApiResponse.failure("(:-P) Wanna Hack ME (:-P)")));
     }
 
 }

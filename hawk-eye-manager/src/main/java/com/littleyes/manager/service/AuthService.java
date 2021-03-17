@@ -1,6 +1,7 @@
 package com.littleyes.manager.service;
 
 import com.littleyes.manager.query.LoginQuery;
+import com.littleyes.storage.entity.AccountModel;
 
 import java.util.Map;
 
@@ -13,5 +14,9 @@ import java.util.Map;
 public interface AuthService {
 
     Map<String,Object> login(LoginQuery query);
+
+    AccountModel getAccountByToken(String token);
+
+    AccountModel getCurrentAccount();
 
 }
