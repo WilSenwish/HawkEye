@@ -67,7 +67,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AccountModel getAccountByToken(String token) {
-        return SESSIONS.get(token);
+        AccountModel account;
+
+        synchronized (SESSIONS) {
+            account = SESSIONS.get(token);
+        }
+
+        return account;
     }
 
     @Override

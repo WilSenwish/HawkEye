@@ -52,8 +52,16 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
 
     @Override
     public boolean matches(String key, String code) {
-        return StringUtils.isNotBlank(key) && StringUtils.isNotBlank(code)
-                && code.equalsIgnoreCase(CODES.get(key));
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(code)) {
+            return false;
+        }
+
+        String cachedCode;
+        synchronized (CODES) {
+            cachedCode = CODES.get(key);
+        }
+
+        return code.equalsIgnoreCase(cachedCode);
     }
 
 }
