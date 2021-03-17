@@ -35,13 +35,16 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
      */
     private static class ValidateCodeCache extends LinkedHashMap<String, String> {
 
-        ValidateCodeCache(int initialCapacity) {
-            super(initialCapacity, 1F, true);
+        private final int maxCapacity;
+
+        ValidateCodeCache(int maxCapacity) {
+            super(maxCapacity, 1F, true);
+            this.maxCapacity = maxCapacity;
         }
 
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
-            return size() > CAPACITY;
+            return size() > maxCapacity;
         }
     }
 
