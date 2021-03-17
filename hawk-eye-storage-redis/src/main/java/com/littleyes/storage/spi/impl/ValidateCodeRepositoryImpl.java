@@ -41,9 +41,7 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
         codeResult.put("key", key);
         codeResult.put("base64", ValidateCode.generate(code));
 
-        synchronized (CODES) {
-            CODES.put(key, code);
-        }
+        CODES.put(key, code);
 
         log.info("{} KEY[{}] with CODE [{}]", HAWK_REDIS_STORAGE, key, code);
 
@@ -56,12 +54,7 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
             return false;
         }
 
-        String cachedCode;
-        synchronized (CODES) {
-            cachedCode = CODES.get(key);
-        }
-
-        return code.equalsIgnoreCase(cachedCode);
+        return code.equalsIgnoreCase(CODES.get(key));
     }
 
 }

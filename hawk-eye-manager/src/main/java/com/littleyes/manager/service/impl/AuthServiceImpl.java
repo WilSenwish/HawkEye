@@ -58,22 +58,14 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String token = UUID.randomUUID().toString();
-        synchronized (SESSIONS) {
-            SESSIONS.put(token, account);
-        }
+        SESSIONS.put(token, account);
 
         return Collections.singletonMap("token", token);
     }
 
     @Override
     public AccountModel getAccountByToken(String token) {
-        AccountModel account;
-
-        synchronized (SESSIONS) {
-            account = SESSIONS.get(token);
-        }
-
-        return account;
+        return SESSIONS.get(token);
     }
 
     @Override
