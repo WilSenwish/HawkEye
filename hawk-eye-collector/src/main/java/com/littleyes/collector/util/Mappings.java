@@ -1,11 +1,11 @@
 package com.littleyes.collector.util;
 
+import com.littleyes.common.util.ApiResponse;
 import com.littleyes.common.util.JsonUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class Mappings {
     }
 
     public static void hack(HttpServletResponse response) throws IOException {
-        response.getWriter().write(JsonUtils.toString(Collections.singletonMap("message", "Wanna Hack ME")));
+        response.getWriter().write(JsonUtils.toString(ApiResponse.failure("Wanna Hack ME")));
     }
 
 }

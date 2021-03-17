@@ -12,6 +12,6 @@ import com.littleyes.storage.entity.AccountModel;
 @SPI
 public interface AccountRepository {
 
-    AccountModel getById(Integer id);
+    AccountModel selectByUsernameAndPassword(String username, String password);
 
 }

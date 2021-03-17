@@ -16,8 +16,9 @@ import com.littleyes.storage.spi.AccountRepository;
 public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
-    public AccountModel getById(Integer id) {
-        return SpringContextHolder.getBean(AccountMapper.class).selectById(id);
+    public AccountModel selectByUsernameAndPassword(String username, String password) {
+        return SpringContextHolder.getBean(AccountMapper.class)
+                .selectByUsernameAndPassword(username, password);
     }
 
 }

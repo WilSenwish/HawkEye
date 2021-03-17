@@ -29,6 +29,11 @@
             <artifactId>spring-context</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Junbing.Chen
  * @date 2021-03-17
  */
-public class LRUCache extends LinkedHashMap<String, String> {
+public class LRUCache<T> extends LinkedHashMap<String, T> {
 
     private final int maxCapacity;
 
@@ -19,7 +19,7 @@ public class LRUCache extends LinkedHashMap<String, String> {
     }
 
     @Override
-    protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+    protected boolean removeEldestEntry(Map.Entry<String, T> eldest) {
         return size() > maxCapacity;
     }
 

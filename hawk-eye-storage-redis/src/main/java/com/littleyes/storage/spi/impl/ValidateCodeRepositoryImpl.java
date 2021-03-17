@@ -26,7 +26,11 @@ public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
 
     private static final int CAPACITY = 1 << 10;
 
-    private static final LRUCache CODES = new LRUCache(CAPACITY);
+    /**
+     * key -> code <br/>
+     * <b>only for test or single service usage without data bak</b>
+     */
+    private static final LRUCache<String> CODES = new LRUCache<>(CAPACITY);
 
     @Override
     public Map<String, Object> generate() {
