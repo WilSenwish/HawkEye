@@ -27,15 +27,18 @@ public class HawkEyeConfig {
     private static String   projectName             = "HAWK_EYE_default";
     private static String   gitCommitId             = "please packaged with[pl.project13.maven:git-commit-id-plugin]";
 
-    private static int      sampleRate              = 1;
-    private static int      entrySampleRate         = 1;
-
     private static long     collectorSpinWaitMills  = 30L;
     private static boolean  performanceEnabled      = false;
     private static boolean  loggingEnabled          = false;
     private static String   loggingCollectLevel     = "INFO";
 
     static {
+        initMainProperties();
+
+        initGitProperties();
+    }
+
+    private static void initMainProperties() {
         try {
             Properties properties;
 
@@ -47,8 +50,6 @@ public class HawkEyeConfig {
             }
 
             projectName             = properties.getProperty("hawk-eye.project-name", projectName);
-            sampleRate              = Integer.parseInt(properties.getProperty("hawk-eye.sample-rate", "1"));
-            entrySampleRate         = Integer.parseInt(properties.getProperty("hawk-eye.entry-sample-rate", "1"));
             collectorSpinWaitMills  = Long.parseLong(properties.getProperty("hawk-eye.collector-spin-wait-mills", "30"));
             performanceEnabled      = Boolean.parseBoolean(properties.getProperty("hawk-eye.performance-enabled",  "false"));
             loggingEnabled          = Boolean.parseBoolean(properties.getProperty("hawk-eye.logging-enabled",  "false"));
@@ -56,7 +57,9 @@ public class HawkEyeConfig {
         } catch (Exception e) {
             log.error("{} Load config[{}] error：{}", HAWK_EYE_COMMON, CONF_RESOURCE_NAME, e.getMessage());
         }
+    }
 
+    private static void initGitProperties() {
         try {
             Properties properties   = HawkEyeConfigLoader.loadFromClassPath(GIT_RESOURCE_NAME);
             gitCommitId             = properties.getProperty("git.commit.id", gitCommitId);
@@ -71,14 +74,6 @@ public class HawkEyeConfig {
 
     public static String getGitCommitId() {
         return gitCommitId;
-    }
-
-    public static int getSampleRate() {
-        return sampleRate;
-    }
-
-    public static int getEntrySampleRate() {
-        return entrySampleRate;
     }
 
     public static long getCollectorSpinWaitMills() {
