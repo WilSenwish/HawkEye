@@ -49,7 +49,7 @@ public class HawkEyeApiFilter implements Filter {
             this.excludePrefixes.addAll(Arrays.asList(configuredExcludePrefixes.split(",")));
         }
 
-        log.info("{} Current [{}] is [{}]", HAWK_EYE_COLLECTOR, GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        log.info("{} Current [{}] is [{}]", HAWK_EYE_COLLECTOR, GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
         log.info("{} Current [{}] is [{}]", HAWK_EYE_COLLECTOR, PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
     }
 
@@ -105,7 +105,7 @@ public class HawkEyeApiFilter implements Filter {
         TraceContext context = TraceContext.init(extractTraceId(req), extractTraceDebugSwitch(req));
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
-        res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
         res.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
     }
 

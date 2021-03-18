@@ -27,7 +27,7 @@ public class HealthController {
 
     @GetMapping("commitId")
     public String commitId() {
-        return HawkEyeConfig.getCommitId();
+        return HawkEyeConfig.getGitCommitId();
     }
 
 }

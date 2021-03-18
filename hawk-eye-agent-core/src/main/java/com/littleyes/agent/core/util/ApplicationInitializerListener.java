@@ -2,8 +2,13 @@ package com.littleyes.agent.core.util;
 
 import com.littleyes.agent.core.jvm.JvmMetricProvider;
 import com.littleyes.collector.util.Mappings;
+import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.threadpool.util.HawkEyeForkJoinPools;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -22,15 +27,31 @@ import static com.littleyes.agent.core.util.Constants.HAWK_EYE_AGENT;
  */
 @Slf4j
 @Component
-public class ApplicationInitializedListener implements ApplicationListener<ContextRefreshedEvent> {
+public class ApplicationInitializerListener implements ApplicationListener<ApplicationEvent> {
+
+    @Autowired
+    private ServerProperties serverProperties;
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event instanceof ContextRefreshedEvent) {
+            onContextRefreshed((ContextRefreshedEvent) event);
+        } else if (event instanceof WebServerInitializedEvent) {
+            onWebServerInitialized((WebServerInitializedEvent) event);
+        }
+    }
+
+    private void onContextRefreshed(ContextRefreshedEvent event) {
         monitorJvm();
 
         extractRequestMapping4Use(event);
 
         monitorForkJoinPoolOfCommonPool();
+    }
+
+    private void onWebServerInitialized(WebServerInitializedEvent event) {
+        HawkEyeConfig.recordServerPort(serverProperties.getPort());
+        log.info("{} Current Application Port [{}]", HAWK_EYE_AGENT, serverProperties.getPort());
     }
 
     private void monitorJvm() {

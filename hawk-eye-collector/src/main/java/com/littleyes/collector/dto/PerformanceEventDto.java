@@ -16,7 +16,7 @@ public class PerformanceEventDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String projectName;
+    private String  projectName;
     private Integer type;
     private List<String> events;
 

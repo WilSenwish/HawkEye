@@ -18,12 +18,12 @@ public class LoggingLogDto extends BaseDto implements Serializable {
 
     private long timestamp;
     private long time;
-    private int logLevel;
-    private String logLevelStr;
-    private String className;
-    private String methodName;
-    private int lineNumber;
-    private String loggingMessage;
+    private Integer logLevel;
+    private String  logLevelStr;
+    private String  className;
+    private String  methodName;
+    private Integer lineNumber;
+    private String  loggingMessage;
 
     /**
      * 异常类名称

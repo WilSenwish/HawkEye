@@ -19,15 +19,21 @@ public class BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String projectName;
-    private String serverIp;
-    private String threadName;
-    private String traceId;
+    private String  projectName;
+    private String  serverIp;
+    private Integer serverPort;
+    private String  threadName;
+    private String  traceId;
     private boolean debug;
 
-    public String generateGroupKey() {
-        if (Objects.nonNull(projectName) && Objects.nonNull(serverIp)) {
-            return projectName.concat(":").concat(serverIp);
+    /**
+     * 项目-服务IP-服务PORT 分组 KEY
+     *
+     * @return projectName:serverIp:serverPort
+     */
+    public String groupKey() {
+        if (Objects.nonNull(projectName) && Objects.nonNull(serverIp) && Objects.nonNull(serverPort)) {
+            return projectName.concat(":").concat(serverIp).concat(":").concat(serverPort.toString());
         }
 
         return null;
@@ -36,6 +42,7 @@ public class BaseDto implements Serializable {
     public void initBase() {
         projectName = HawkEyeConfig.getProjectName();
         serverIp    = IpUtils.getLocalIp();
+        serverPort  = HawkEyeConfig.getServerPort();
     }
 
     public void initTrace() {

@@ -15,20 +15,25 @@ import java.util.Properties;
 public class HawkEyeConfig {
 
     public static final String HAWK_EYE_COMMON      = "@HawkEyeCommon ===> |";
+
     private static final String CONF_RESOURCE_DIR   = "hawk-eye-config.root";
     private static final String CONF_RESOURCE_NAME  = "hawk-eye-config.properties";
     private static final String GIT_RESOURCE_NAME   = "git.properties";
+    private static final PortHolder PORT_HOLDER     = new PortHolder();
 
     private HawkEyeConfig() {
     }
 
-    private static String projectName           = "HAWK_EYE_default";
-    private static long collectorSpinWaitMills  = 30L;
-    private static boolean performanceEnabled   = false;
-    private static boolean loggingEnabled       = false;
-    private static String loggingCollectLevel   = "INFO";
+    private static String   projectName             = "HAWK_EYE_default";
+    private static String   gitCommitId             = "please packaged with[pl.project13.maven:git-commit-id-plugin]";
 
-    private static String commitId              = "please packaged with[pl.project13.maven:git-commit-id-plugin]";
+    private static int      sampleRate              = 1;
+    private static int      entrySampleRate         = 1;
+
+    private static long     collectorSpinWaitMills  = 30L;
+    private static boolean  performanceEnabled      = false;
+    private static boolean  loggingEnabled          = false;
+    private static String   loggingCollectLevel     = "INFO";
 
     static {
         try {
@@ -42,6 +47,8 @@ public class HawkEyeConfig {
             }
 
             projectName             = properties.getProperty("hawk-eye.project-name", projectName);
+            sampleRate              = Integer.parseInt(properties.getProperty("hawk-eye.sample-rate", "1"));
+            entrySampleRate         = Integer.parseInt(properties.getProperty("hawk-eye.entry-sample-rate", "1"));
             collectorSpinWaitMills  = Long.parseLong(properties.getProperty("hawk-eye.collector-spin-wait-mills", "30"));
             performanceEnabled      = Boolean.parseBoolean(properties.getProperty("hawk-eye.performance-enabled",  "false"));
             loggingEnabled          = Boolean.parseBoolean(properties.getProperty("hawk-eye.logging-enabled",  "false"));
@@ -52,7 +59,7 @@ public class HawkEyeConfig {
 
         try {
             Properties properties   = HawkEyeConfigLoader.loadFromClassPath(GIT_RESOURCE_NAME);
-            commitId                = properties.getProperty("git.commit.id", commitId);
+            gitCommitId             = properties.getProperty("git.commit.id", gitCommitId);
         } catch (Exception e) {
             log.error("{} Load config[{}] error：{}", HAWK_EYE_COMMON, GIT_RESOURCE_NAME, e.getMessage());
         }
@@ -60,6 +67,18 @@ public class HawkEyeConfig {
 
     public static String getProjectName() {
         return projectName;
+    }
+
+    public static String getGitCommitId() {
+        return gitCommitId;
+    }
+
+    public static int getSampleRate() {
+        return sampleRate;
+    }
+
+    public static int getEntrySampleRate() {
+        return entrySampleRate;
     }
 
     public static long getCollectorSpinWaitMills() {
@@ -86,8 +105,20 @@ public class HawkEyeConfig {
         return loggingCollectLevel;
     }
 
-    public static String getCommitId() {
-        return commitId;
+    public synchronized static void recordServerPort(Integer serverPort) {
+        if (Objects.nonNull(PORT_HOLDER.port) && !Objects.equals(PORT_HOLDER.port, serverPort)) {
+            log.warn("{} Override [PORT_HOLDER.port] from [{}] to [{}]", HAWK_EYE_COMMON, PORT_HOLDER.port, serverPort);
+        }
+
+        PORT_HOLDER.port = serverPort;
+    }
+
+    public static Integer getServerPort() {
+        return PORT_HOLDER.port;
+    }
+
+    private static class PortHolder {
+        private Integer port;
     }
 
 }

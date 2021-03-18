@@ -36,7 +36,7 @@ public class Mappings {
     }
 
     public static void hack(HttpServletResponse response) throws IOException {
-        response.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getCommitId());
+        response.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
         response.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
 
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);

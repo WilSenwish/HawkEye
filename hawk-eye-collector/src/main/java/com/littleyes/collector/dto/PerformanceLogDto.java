@@ -16,9 +16,9 @@ public class PerformanceLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String event;
-    private String method;
-    private int type;
+    private String  event;
+    private String  method;
+    private Integer type;
     private boolean success;
     private long start;
     private long end;
