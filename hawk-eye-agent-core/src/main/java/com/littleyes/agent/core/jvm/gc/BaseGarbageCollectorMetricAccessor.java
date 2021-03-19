@@ -77,8 +77,18 @@ public abstract class BaseGarbageCollectorMetricAccessor implements GarbageColle
         return garbageCollectorMetricList;
     }
 
+    /**
+     * MinorGarbageCollectorName
+     *
+     * @return
+     */
     protected abstract String getMinorGarbageCollectorName();
 
+    /**
+     * MajorGarbageCollectorName
+     *
+     * @return
+     */
     protected abstract String getMajorGarbageCollectorName();
 
 }

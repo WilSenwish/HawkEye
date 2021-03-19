@@ -79,12 +79,32 @@ public abstract class BaseMemoryPoolMetricAccessor implements MemoryPoolMetricAc
         return new String[] {"Metaspace"};
     }
 
+    /**
+     * NewGenNames
+     *
+     * @return
+     */
     protected abstract String[] getNewGenNames();
 
+    /**
+     * OldGenNames
+     *
+     * @return
+     */
     protected abstract String[] getOldGenNames();
 
+    /**
+     * SurvivorNames
+     *
+     * @return
+     */
     protected abstract String[] getSurvivorNames();
 
+    /**
+     * PermNames
+     *
+     * @return
+     */
     protected abstract String[] getPermNames();
 
 }
