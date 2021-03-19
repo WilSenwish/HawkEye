@@ -1,7 +1,10 @@
 package com.littleyes.collector.dto;
 
 import com.littleyes.common.enums.DateTimeFormatterEnum;
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -11,7 +14,10 @@ import java.io.Serializable;
  * @author Junbing.Chen
  * @date 2021-02-19
  */
-@Data
+@EqualsAndHashCode
+@ToString
+@Getter
+@Builder
 public class LoggingLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

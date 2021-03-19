@@ -88,30 +88,31 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
     }
 
     private LoggingLogDto buildLoggingLog(ILoggingEvent event) {
-        LoggingLogDto loggingLog = new LoggingLogDto();
-
-        // Log 本身信息
-        loggingLog.setTimestamp(event.getTimeStamp());
-        loggingLog.setLogLevel(event.getLevel().toInt());
-        loggingLog.setLogLevelStr(event.getLevel().toString());
-
-        // 日志发生坐标信息
         StackTraceElement stackTrace = getLastStackTrace(event);
-        loggingLog.setClassName(stackTrace.getClassName());
-        loggingLog.setMethodName(stackTrace.getMethodName());
-        loggingLog.setLineNumber(stackTrace.getLineNumber());
-        loggingLog.setLoggingMessage(extractLoggingMessage(event));
-
-        // 异常信息
+        String throwableName = null;
+        String throwableStackTrace = null;
         IThrowableProxy throwableProxy = event.getThrowableProxy();
         if (Objects.nonNull(throwableProxy)) {
-            StringBuilder throwableStackTrace = new StringBuilder();
-            recursivelyAppendStackTrace(throwableStackTrace, throwableProxy, null);
-            loggingLog.setThrowableName(throwableProxy.getClassName());
-            loggingLog.setThrowableStackTrace(throwableStackTrace.toString());
+            StringBuilder throwableStackTraceBuf = new StringBuilder();
+            recursivelyAppendStackTrace(throwableStackTraceBuf, throwableProxy, null);
+            throwableName = throwableProxy.getClassName();
+            throwableStackTrace = throwableStackTraceBuf.toString();
         }
 
-        return loggingLog;
+        return LoggingLogDto.builder()
+                // Log 本身信息
+                .timestamp(event.getTimeStamp())
+                .logLevel(event.getLevel().toInt())
+                .logLevelStr(event.getLevel().toString())
+                // 日志发生坐标信息
+                .className(stackTrace.getClassName())
+                .methodName(stackTrace.getMethodName())
+                .lineNumber(stackTrace.getLineNumber())
+                .loggingMessage(extractLoggingMessage(event))
+                // 异常信息
+                .throwableName(throwableName)
+                .throwableStackTrace(throwableStackTrace)
+                .build();
     }
 
     private static StackTraceElement getLastStackTrace(ILoggingEvent event) {

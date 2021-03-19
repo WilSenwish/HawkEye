@@ -3,7 +3,8 @@ package com.littleyes.collector.dto;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.IpUtils;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +15,8 @@ import java.util.Objects;
  * @author Junbing.Chen
  * @date 2021-02-19
  */
-@Data
+@Getter
+@Setter
 public class BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

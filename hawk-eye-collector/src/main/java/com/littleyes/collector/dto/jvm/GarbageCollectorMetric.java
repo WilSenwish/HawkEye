@@ -1,6 +1,7 @@
 package com.littleyes.collector.dto.jvm;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @author Junbing.Chen
  * @date 2021-02-25
  */
+@EqualsAndHashCode
 @ToString
 @Getter
 @Builder

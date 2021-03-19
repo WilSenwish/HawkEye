@@ -1,6 +1,9 @@
 package com.littleyes.collector.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +14,10 @@ import java.util.List;
  * @author Junbing.Chen
  * @date 2021-02-20
  */
-@Data
+@EqualsAndHashCode
+@ToString
+@Getter
+@Builder
 public class PerformanceEventDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

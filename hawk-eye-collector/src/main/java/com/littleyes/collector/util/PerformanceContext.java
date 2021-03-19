@@ -66,14 +66,15 @@ public class PerformanceContext {
     public static PerformanceLogDto buildPerformanceLog(int type) {
         PerformanceContext context = allContext.get(type).get();
 
-        PerformanceLogDto performanceLog = new PerformanceLogDto();
-        performanceLog.setEvent(context.event);
-        performanceLog.setMethod(context.method);
-        performanceLog.setType(context.type);
-        performanceLog.setSuccess(context.success);
-        performanceLog.setStart(context.start);
-        performanceLog.setEnd(context.end);
-        performanceLog.setBody(context.getBody());
+        PerformanceLogDto performanceLog = PerformanceLogDto.builder()
+                .event(context.event)
+                .method(context.method)
+                .type(context.type)
+                .success(context.success)
+                .start(context.start)
+                .end(context.end)
+                .body(context.getBody())
+                .build();
 
         performanceLog.initTrace();
 
