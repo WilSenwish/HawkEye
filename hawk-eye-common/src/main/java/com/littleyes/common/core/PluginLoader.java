@@ -2,7 +2,10 @@ package com.littleyes.common.core;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,13 +38,13 @@ public class PluginLoader<T> {
     @SuppressWarnings("unchecked")
     public static <T> PluginLoader<T> of(Class<T> type) {
         if (type == null) {
-            throw new IllegalArgumentException("Plugin's type == null");
+            throw new IllegalArgumentException("Plugin's type is null");
         }
         if (!type.isInterface()) {
             throw new IllegalArgumentException("Plugin's type (" + type + ") is not an interface!");
         }
-        if (!type.isAnnotationPresent(SPI.class)) {
-            throw new IllegalStateException("Plugin's " + type + " must annotate @" + SPI.class.getName() + "!");
+        if (!hasSpiAnnotation(type)) {
+            throw new IllegalStateException("Plugin must annotate @" + spiFullName() + "!");
         }
 
         PluginLoader<T> loader = (PluginLoader<T>) EXTENSION_PLUGIN_LOADERS.get(type);
@@ -55,6 +58,11 @@ public class PluginLoader<T> {
 
     @SuppressWarnings("unchecked")
     public T load() {
+        return load(false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public T load(boolean wrap) {
         final Holder<Object> holder = getOrCreateHolder();
         Object instance = holder.get();
 
@@ -62,10 +70,10 @@ public class PluginLoader<T> {
             synchronized (holder) {
                 instance = holder.get();
                 if (instance == null) {
-                    log.info("{} Load plugin of [{}]", HAWK_EYE_COMMON, type);
-                    instance = loadExtensionPlugin();
+                    log.info("{} Load Plugin of [{}]", HAWK_EYE_COMMON, type);
+                    instance = loadExtensionPlugin(wrap);
                     holder.set(instance);
-                    log.info("{} Loaded [NO.{}] plugin [{}] with provider[{}]",
+                    log.info("{} Loaded [NO.{}] Plugin [{}] with Provider[{}]",
                             HAWK_EYE_COMMON, counter.incrementAndGet(), type, instance);
                 }
             }
@@ -85,34 +93,50 @@ public class PluginLoader<T> {
         return holder;
     }
 
-    private T loadExtensionPlugin() {
+    private T loadExtensionPlugin(boolean wrap) {
         List<T> instances = new LinkedList<>();
 
         try {
+            boolean loaded = false;
             ServiceLoader<T> loader = ServiceLoader.load(type, getDefaultClassLoader());
 
             for (T t : loader) {
                 // must Annotate @SPI
-                if (t.getClass().isAnnotationPresent(SPI.class)) {
+                if (hasSpiAnnotation(t.getClass())) {
                     instances.add(t);
                 }
+                loaded = true;
             }
 
-            // TODO extra extends for PluginFactory
-
-            if (!instances.isEmpty()) {
-                Optional<T> t = instances.stream()
-                        .min(Comparator.comparing(e -> e.getClass().getAnnotation(SPI.class).order()));
-                if (t.isPresent()) {
-                    // return the highest precedence one
-                    return t.get();
-                }
+            if (!loaded) {
+                log.error("{} Plugin[{}] without Provider", HAWK_EYE_COMMON, type);
+            } else if (instances.isEmpty()) {
+                log.error("{} Plugin[{}] must annotate @{}", HAWK_EYE_COMMON, type, spiFullName());
             }
         } catch (Exception e) {
             log.error("{} Load plugin[{}] with error [{}]", HAWK_EYE_COMMON, type, e.getMessage(), e);
         }
 
-        throw new NullPointerException("Plugin of type[" + type.getName() + "] not found!!!");
+        T instance = instances.stream()
+                .min(Comparator.comparing(e -> e.getClass().getAnnotation(SPI.class).order()))
+                .orElseThrow(() -> new NullPointerException("Plugin of type[" + type.getName() + "] not found!!!"));
+
+        instance = injectPlugin(instance);
+        if (wrap) {
+            instance = wrapPlugin(instance);
+        }
+
+        return instance;
+    }
+
+    private T injectPlugin(T instance) {
+        // TODO
+        return instance;
+    }
+
+    private T wrapPlugin(T instance) {
+        // TODO
+        return instance;
     }
 
     private ClassLoader getDefaultClassLoader() {
@@ -147,6 +171,14 @@ public class PluginLoader<T> {
         }
 
         return cl;
+    }
+
+    private static boolean hasSpiAnnotation(Class<?> type) {
+        return type.isAnnotationPresent(SPI.class);
+    }
+
+    private static String spiFullName() {
+        return SPI.class.getName();
     }
 
     private static class Holder<T> {
