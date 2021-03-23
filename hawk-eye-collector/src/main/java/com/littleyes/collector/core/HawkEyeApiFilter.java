@@ -102,7 +102,7 @@ public class HawkEyeApiFilter implements Filter {
     }
 
     private void initTraceContext(HttpServletRequest req, HttpServletResponse res) {
-        TraceContext context = TraceContext.init(extractTraceId(req), extractTraceDebugSwitch(req));
+        TraceContext context = TraceContext.init(extractTraceId(req));
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
         res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
@@ -116,15 +116,6 @@ public class HawkEyeApiFilter implements Filter {
         }
 
         return traceId;
-    }
-
-    private boolean extractTraceDebugSwitch(HttpServletRequest req) {
-        String traceDebugSwitch = req.getHeader(TRACE_DEBUG_KEY);
-        if (Objects.isNull(traceDebugSwitch)) {
-            traceDebugSwitch = req.getParameter(TRACE_DEBUG_KEY);
-        }
-
-        return Boolean.parseBoolean(traceDebugSwitch);
     }
 
     private boolean isExcludePath(String path) {

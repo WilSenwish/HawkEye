@@ -26,7 +26,6 @@ public class BaseDto implements Serializable {
     private Integer serverPort;
     private String  threadName;
     private String  traceId;
-    private boolean debug;
 
     /**
      * 项目-服务IP-服务PORT 分组 KEY
@@ -50,7 +49,6 @@ public class BaseDto implements Serializable {
     public void initTrace() {
         threadName  = Thread.currentThread().getName();
         traceId     = TraceContext.traceId();
-        debug       = TraceContext.traceDebugEnabled();
     }
 
 }

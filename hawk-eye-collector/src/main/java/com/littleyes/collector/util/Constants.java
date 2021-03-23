@@ -22,7 +22,6 @@ public interface Constants {
 
     String OPTIONS_METHOD       = "OPTIONS";
     String TRACE_ID_KEY         = "X-HAWK-EYE-TRACE-ID";
-    String TRACE_DEBUG_KEY      = "X-HAWK-EYE-TRACE-DEBUG";
     String GIT_COMMIT_ID_KEY    = "X-HAWK-EYE-GIT-COMMIT-ID";
     String PROJECT_NAME_KEY     = "X-HAWK-EYE-PROJECT-NAME";
 
