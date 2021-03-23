@@ -44,7 +44,7 @@ public class LoggingLogBuffer {
         hawkEyeLoggingCollector.start();
     }
 
-    public static void log(LoggingLogDto loggingLog) {
+    public static void offer(LoggingLogDto loggingLog) {
         if (HawkEyeConfig.isLoggingDisabled()) {
             log.info("{} Logging monitor disabled!!!", HAWK_EYE_COLLECTOR);
             return;

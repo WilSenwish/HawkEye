@@ -81,8 +81,7 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         }
 
         try {
-            LoggingLogDto loggingLog = buildLoggingLog(eventObject);
-            LoggingLogBuffer.log(loggingLog);
+            LoggingLogBuffer.offer(buildLoggingLog(eventObject));
         } catch (Exception ignore) {
         }
     }
