@@ -20,6 +20,10 @@
             <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-thread-pool</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>

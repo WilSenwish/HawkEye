@@ -1,9 +1,8 @@
-package com.littleyes.collector.util;
+package com.littleyes.common.util;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.enums.PerformanceTypeEnum;
-import com.littleyes.common.util.JsonUtils;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -77,6 +76,7 @@ public class PerformanceContext {
                 .build();
 
         performanceLog.initTrace();
+        performanceLog.initBase();
 
         return performanceLog;
     }

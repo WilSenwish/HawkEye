@@ -1,12 +1,12 @@
 package com.littleyes.collector.buf;
 
-import com.littleyes.common.dto.PerformanceLogDto;
-import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.collector.worker.HawkEyePerformanceCollector;
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -45,7 +45,7 @@ public class PerformanceLogBuffer {
         hawkEyePerformanceCollector.start();
     }
 
-    public static void log(int type) {
+    public static void sample(List<PerformanceLogDto> performanceLogs) {
         if (HawkEyeConfig.isPerformanceDisabled()) {
             log.info("{} Performance monitor disabled!!!", HAWK_EYE_COLLECTOR);
             return;
@@ -57,10 +57,12 @@ public class PerformanceLogBuffer {
         }
 
         try {
-            PerformanceLogDto performanceLog = PerformanceContext.buildPerformanceLog(type);
-            boolean success = BUFFER.offer(performanceLog);
-            if (!success) {
-                log.warn("{} Performance log [{}] queue failed!!!", HAWK_EYE_COLLECTOR, JsonUtils.toString(performanceLog));
+            for (PerformanceLogDto performanceLog : performanceLogs) {
+                boolean success = BUFFER.offer(performanceLog);
+                if (!success) {
+                    log.warn("{} Performance log [{}] queue failed!!!",
+                            HAWK_EYE_COLLECTOR, JsonUtils.toString(performanceLog));
+                }
             }
         } catch (Exception ignore) {
         }

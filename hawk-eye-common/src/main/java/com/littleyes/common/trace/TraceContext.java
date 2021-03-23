@@ -2,10 +2,14 @@ package com.littleyes.common.trace;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.littleyes.common.dto.PerformanceLogDto;
+import com.littleyes.common.util.PerformanceContext;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 
 /**
  * <p> <b> 上下文 </b> </p>
@@ -13,6 +17,7 @@ import java.util.Objects;
  * @author Junbing.Chen
  * @date 2021-02-18
  */
+@Slf4j
 public class TraceContext {
 
     private static final ThreadLocal<TraceContext> TTLC = TransmittableThreadLocal.withInitial(TraceContext::new);
@@ -20,17 +25,11 @@ public class TraceContext {
 
     private String  traceId;
     private boolean debugMode;
-    private boolean occursError;
-    private long    serviceTimeMillis;
     private List<PerformanceLogDto> performanceLogs = new ArrayList<>();
 
 
     public String getTraceId() {
         return traceId;
-    }
-
-    private void setTraceId(String traceId) {
-        this.traceId = traceId;
     }
 
     public boolean isDebugMode() {
@@ -41,28 +40,15 @@ public class TraceContext {
         this.debugMode = debugMode;
     }
 
-    public boolean isOccursError() {
-        return occursError;
-    }
-
-    public void setOccursError(boolean occursError) {
-        this.occursError = occursError;
-    }
-
-    public long getServiceTimeMillis() {
-        return serviceTimeMillis;
-    }
-
-    public void setServiceTimeMillis(long serviceTimeMillis) {
-        this.serviceTimeMillis = serviceTimeMillis;
-    }
-
     public List<PerformanceLogDto> getPerformanceLogs() {
         return performanceLogs;
     }
 
     public void addPerformanceLog(PerformanceLogDto performanceLog) {
         this.performanceLogs.add(performanceLog);
+        if (isDebugMode()) {
+            log.info("{} {}", HAWK_EYE_COMMON, performanceLog);
+        }
     }
 
     private TraceContext() {
@@ -86,12 +72,8 @@ public class TraceContext {
         return get().debugMode;
     }
 
-    public static boolean occursError() {
-        return get().occursError;
-    }
-
-    public static long serviceTimeMillis() {
-        return get().serviceTimeMillis;
+    public static void append(int type) {
+        get().addPerformanceLog(PerformanceContext.buildPerformanceLog(type));
     }
 
     public static List<PerformanceLogDto> performanceLogs() {
@@ -99,15 +81,11 @@ public class TraceContext {
     }
 
 
-    private static void set(TraceContext context) {
-        TTLC.set(context);
-    }
-
-    private static TraceContext get() {
+    public static TraceContext get() {
         return TTLC.get();
     }
 
-    private static void remove() {
+    public static void remove() {
         TTLC.remove();
     }
 

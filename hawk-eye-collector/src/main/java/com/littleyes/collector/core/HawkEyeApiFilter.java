@@ -1,12 +1,14 @@
 package com.littleyes.collector.core;
 
 import com.littleyes.collector.buf.PerformanceLogBuffer;
+import com.littleyes.collector.sample.HawkEyeSampleDecisionManager;
 import com.littleyes.collector.util.Mappings;
-import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.trace.TraceContext;
+import com.littleyes.common.util.PerformanceContext;
 import com.littleyes.common.util.RequestParamUtils;
+import com.littleyes.threadpool.util.HawkEyeExecutors;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 import static com.littleyes.collector.util.Constants.*;
 
@@ -28,6 +31,8 @@ import static com.littleyes.collector.util.Constants.*;
  */
 @Slf4j
 public class HawkEyeApiFilter implements Filter {
+
+    private static ExecutorService sampler = HawkEyeExecutors.newThreadExecutor("Sampler", 16);
 
     private final Set<String> excludeUrls       = new LinkedHashSet<>();
     private final Set<String> excludePrefixes   = new LinkedHashSet<>();
@@ -97,12 +102,15 @@ public class HawkEyeApiFilter implements Filter {
                     System.currentTimeMillis()
             );
             context.setParameters(RequestParamUtils.map(req));
-            PerformanceLogBuffer.log(PerformanceTypeEnum.API.getType());
+            TraceContext.append(PerformanceTypeEnum.API.getType());
+
+            sampler.execute(new SampleRunnable());
         }
     }
 
     private void initTraceContext(HttpServletRequest req, HttpServletResponse res) {
         TraceContext context = TraceContext.init(extractTraceId(req));
+        // TODO Debug Mode setting
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
         res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
@@ -156,6 +164,26 @@ public class HawkEyeApiFilter implements Filter {
 
     @Override
     public void destroy() {
+    }
+
+    /**
+     * 异步采样任务
+     */
+    static class SampleRunnable implements Runnable {
+
+        private final TraceContext traceContext;
+
+        SampleRunnable() {
+            this.traceContext = TraceContext.get();
+            TraceContext.remove();
+        }
+
+        @Override
+        public void run() {
+            if (HawkEyeSampleDecisionManager.decide(traceContext)) {
+                PerformanceLogBuffer.sample(traceContext.getPerformanceLogs());
+            }
+        }
     }
 
 }

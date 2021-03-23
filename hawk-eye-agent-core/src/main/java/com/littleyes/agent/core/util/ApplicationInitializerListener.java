@@ -1,6 +1,7 @@
 package com.littleyes.agent.core.util;
 
 import com.littleyes.agent.core.jvm.JvmMetricProvider;
+import com.littleyes.collector.sample.HawkEyeSampleDecisionManager;
 import com.littleyes.collector.util.Mappings;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.threadpool.util.HawkEyeForkJoinPools;
@@ -52,6 +53,8 @@ public class ApplicationInitializerListener implements ApplicationListener<Appli
     private void onWebServerInitialized(WebServerInitializedEvent event) {
         HawkEyeConfig.recordServerPort(serverProperties.getPort());
         log.info("{} Current Application Port [{}]", HAWK_EYE_AGENT, serverProperties.getPort());
+
+        HawkEyeSampleDecisionManager.init();
     }
 
     private void monitorJvm() {

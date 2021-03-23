@@ -1,9 +1,9 @@
 package com.littleyes.collector.core;
 
-import com.littleyes.collector.buf.PerformanceLogBuffer;
-import com.littleyes.collector.util.PerformanceContext;
+import com.littleyes.common.util.PerformanceContext;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.enums.PerformanceTypeEnum;
+import com.littleyes.common.trace.TraceContext;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -66,7 +66,7 @@ public class MybatisMonitorInterceptor implements Interceptor {
                     System.currentTimeMillis()
             );
             context.setSql(sql);
-            PerformanceLogBuffer.log(PerformanceTypeEnum.MYSQL.getType());
+            TraceContext.append(PerformanceTypeEnum.MYSQL.getType());
         }
 
         return returnObj;
