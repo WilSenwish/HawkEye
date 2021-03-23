@@ -22,10 +22,10 @@ import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 public class PluginLoader<T> {
 
     private static final ConcurrentMap<Class<?>, PluginLoader<?>> EXTENSION_PLUGIN_LOADERS
-            = new ConcurrentHashMap<>(128);
+            = new ConcurrentHashMap<>(512);
 
     private static final ConcurrentMap<Class<?>, Holder<Object>> EXTENSION_PLUGIN_INSTANCES
-            = new ConcurrentHashMap<>(128);
+            = new ConcurrentHashMap<>(512);
 
     private static AtomicInteger counter = new AtomicInteger();
 
