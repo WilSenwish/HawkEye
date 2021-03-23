@@ -5,7 +5,7 @@ import com.littleyes.agent.core.jvm.memory.MemoryMetricProvider;
 import com.littleyes.agent.core.jvm.memory.MemoryPoolMetricProvider;
 import com.littleyes.agent.core.jvm.thread.ThreadMetricProvider;
 import com.littleyes.collector.buf.JvmMetricBuffer;
-import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.dto.jvm.JvmMetric;
 import com.littleyes.threadpool.core.HawkEyeThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 

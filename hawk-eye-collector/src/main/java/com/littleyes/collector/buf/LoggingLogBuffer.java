@@ -1,6 +1,6 @@
 package com.littleyes.collector.buf;
 
-import com.littleyes.collector.dto.LoggingLogDto;
+import com.littleyes.common.dto.LoggingLogDto;
 import com.littleyes.collector.worker.HawkEyeLoggingCollector;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.util.JsonUtils;

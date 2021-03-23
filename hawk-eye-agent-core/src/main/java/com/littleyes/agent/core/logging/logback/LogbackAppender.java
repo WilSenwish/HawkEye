@@ -7,7 +7,7 @@ import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import com.littleyes.agent.core.util.Constants;
 import com.littleyes.collector.buf.LoggingLogBuffer;
-import com.littleyes.collector.dto.LoggingLogDto;
+import com.littleyes.common.dto.LoggingLogDto;
 import com.littleyes.common.config.HawkEyeConfig;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

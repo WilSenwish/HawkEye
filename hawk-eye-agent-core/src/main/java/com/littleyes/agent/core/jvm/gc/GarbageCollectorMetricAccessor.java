@@ -1,6 +1,6 @@
 package com.littleyes.agent.core.jvm.gc;
 
-import com.littleyes.collector.dto.jvm.GarbageCollectorMetric;
+import com.littleyes.common.dto.jvm.GarbageCollectorMetric;
 
 import java.util.List;
 

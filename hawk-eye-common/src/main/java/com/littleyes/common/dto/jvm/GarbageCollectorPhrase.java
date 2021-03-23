@@ -1,4 +1,4 @@
-package com.littleyes.collector.dto.jvm;
+package com.littleyes.common.dto.jvm;
 
 /**
  * <p> <b> GarbageCollectorMetric 年代分区枚举 </b> </p>

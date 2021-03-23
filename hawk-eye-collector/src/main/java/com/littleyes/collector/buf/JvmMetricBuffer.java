@@ -1,6 +1,6 @@
 package com.littleyes.collector.buf;
 
-import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.dto.jvm.JvmMetric;
 import com.littleyes.collector.worker.HawkEyeJvmMetricCollector;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.util.JsonUtils;

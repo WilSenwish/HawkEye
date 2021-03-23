@@ -1,7 +1,7 @@
 package com.littleyes.agent.core.jvm.memory;
 
 import com.littleyes.agent.core.jvm.memory.impl.*;
-import com.littleyes.collector.dto.jvm.MemoryPoolMetric;
+import com.littleyes.common.dto.jvm.MemoryPoolMetric;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.management.ManagementFactory;

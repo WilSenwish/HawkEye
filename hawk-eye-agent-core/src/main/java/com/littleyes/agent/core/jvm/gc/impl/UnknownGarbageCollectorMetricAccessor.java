@@ -1,8 +1,8 @@
 package com.littleyes.agent.core.jvm.gc.impl;
 
 import com.littleyes.agent.core.jvm.gc.GarbageCollectorMetricAccessor;
-import com.littleyes.collector.dto.jvm.GarbageCollectorMetric;
-import com.littleyes.collector.dto.jvm.GarbageCollectorPhrase;
+import com.littleyes.common.dto.jvm.GarbageCollectorMetric;
+import com.littleyes.common.dto.jvm.GarbageCollectorPhrase;
 
 import java.util.Arrays;
 import java.util.List;

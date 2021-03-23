@@ -1,6 +1,6 @@
 package com.littleyes.collector.worker;
 
-import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.dto.jvm.JvmMetric;
 import com.littleyes.collector.spi.JvmMetricDelivery;
 import com.littleyes.common.core.PluginLoader;
 import lombok.extern.slf4j.Slf4j;

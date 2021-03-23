@@ -1,4 +1,4 @@
-package com.littleyes.collector.dto.jvm;
+package com.littleyes.common.dto.jvm;
 
 /**
  * <p> <b> 内存类型枚举 </b> </p>

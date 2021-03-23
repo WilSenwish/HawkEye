@@ -1,4 +1,4 @@
-package com.littleyes.collector.dto;
+package com.littleyes.common.dto;
 
 import com.littleyes.common.enums.DateTimeFormatterEnum;
 import lombok.Builder;

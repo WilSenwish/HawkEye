@@ -1,6 +1,6 @@
 package com.littleyes.collector.worker;
 
-import com.littleyes.collector.dto.LoggingLogDto;
+import com.littleyes.common.dto.LoggingLogDto;
 import com.littleyes.collector.spi.LoggingLogDelivery;
 import com.littleyes.common.core.PluginLoader;
 import lombok.extern.slf4j.Slf4j;

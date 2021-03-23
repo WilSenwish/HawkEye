@@ -1,6 +1,6 @@
 package com.littleyes.agent.core.jvm.thread;
 
-import com.littleyes.collector.dto.jvm.ThreadMetric;
+import com.littleyes.common.dto.jvm.ThreadMetric;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;

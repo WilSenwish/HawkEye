@@ -1,7 +1,7 @@
 package com.littleyes.agent.core.jvm.memory;
 
-import com.littleyes.collector.dto.jvm.MemoryArea;
-import com.littleyes.collector.dto.jvm.MemoryMetric;
+import com.littleyes.common.dto.jvm.MemoryArea;
+import com.littleyes.common.dto.jvm.MemoryMetric;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;

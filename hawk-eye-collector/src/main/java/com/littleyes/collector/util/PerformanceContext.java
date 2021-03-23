@@ -1,7 +1,7 @@
 package com.littleyes.collector.util;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.littleyes.collector.dto.PerformanceLogDto;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.util.JsonUtils;
 import lombok.Setter;

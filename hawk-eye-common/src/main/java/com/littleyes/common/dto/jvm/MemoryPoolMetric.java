@@ -1,4 +1,4 @@
-package com.littleyes.collector.dto.jvm;
+package com.littleyes.common.dto.jvm;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * <p> <b> Memory Metric Bean </b> </p>
+ * <p> <b> Memory Pool Metric Bean </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-02-26
@@ -17,11 +17,11 @@ import java.io.Serializable;
 @ToString
 @Getter
 @Builder
-public class MemoryMetric implements Serializable {
+public class MemoryPoolMetric implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private MemoryArea area;
+    private MemoryPoolType type;
     private long init;
     private long used;
     private long committed;

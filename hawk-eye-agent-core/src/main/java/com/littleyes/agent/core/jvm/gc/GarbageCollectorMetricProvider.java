@@ -1,7 +1,7 @@
 package com.littleyes.agent.core.jvm.gc;
 
 import com.littleyes.agent.core.jvm.gc.impl.*;
-import com.littleyes.collector.dto.jvm.GarbageCollectorMetric;
+import com.littleyes.common.dto.jvm.GarbageCollectorMetric;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.management.GarbageCollectorMXBean;

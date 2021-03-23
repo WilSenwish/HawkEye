@@ -1,6 +1,6 @@
 package com.littleyes.agent.core.jvm.memory;
 
-import com.littleyes.collector.dto.jvm.MemoryPoolMetric;
+import com.littleyes.common.dto.jvm.MemoryPoolMetric;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.littleyes.collector.dto.jvm;
+package com.littleyes.common.dto.jvm;
 
-import com.littleyes.collector.dto.BaseDto;
+import com.littleyes.common.dto.BaseDto;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

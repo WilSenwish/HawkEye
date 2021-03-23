@@ -1,6 +1,6 @@
 package com.littleyes.collector.buf;
 
-import com.littleyes.collector.dto.PerformanceLogDto;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.collector.util.PerformanceContext;
 import com.littleyes.collector.worker.HawkEyePerformanceCollector;
 import com.littleyes.common.config.HawkEyeConfig;

@@ -1,6 +1,6 @@
 package com.littleyes.collector.spi;
 
-import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.dto.jvm.JvmMetric;
 import com.littleyes.common.core.SPI;
 
 import java.util.List;

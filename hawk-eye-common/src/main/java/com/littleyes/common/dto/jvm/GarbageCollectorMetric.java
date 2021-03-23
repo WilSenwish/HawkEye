@@ -1,4 +1,4 @@
-package com.littleyes.collector.dto.jvm;
+package com.littleyes.common.dto.jvm;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -8,21 +8,21 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * <p> <b> ThreadMetric Bean </b> </p>
+ * <p> <b> GarbageCollectorMetric Bean </b> </p>
  *
  * @author Junbing.Chen
- * @date 2021-02-26
+ * @date 2021-02-25
  */
 @EqualsAndHashCode
 @ToString
 @Getter
 @Builder
-public class ThreadMetric implements Serializable {
+public class GarbageCollectorMetric implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int liveThreadCount;
-    private int peakThreadCount;
-    private int daemonThreadCount;
+    private GarbageCollectorPhrase phrase;
+    private long count;
+    private long time;
 
 }

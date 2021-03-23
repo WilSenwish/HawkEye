@@ -1,6 +1,6 @@
 package com.littleyes.agent.core.jvm;
 
-import com.littleyes.collector.dto.jvm.JvmMetric;
+import com.littleyes.common.dto.jvm.JvmMetric;
 import com.littleyes.common.util.JsonUtils;
 
 import java.security.SecureRandom;
