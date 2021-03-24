@@ -25,4 +25,6 @@ public interface Constants {
     String GIT_COMMIT_ID_KEY    = "X-HAWK-EYE-GIT-COMMIT-ID";
     String PROJECT_NAME_KEY     = "X-HAWK-EYE-PROJECT-NAME";
 
+    String DEFAULT_DEBUG_MARKER_KEY = "X-HAWK-EYE-DEBUG";
+
 }

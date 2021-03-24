@@ -55,10 +55,11 @@ public class TraceContext {
     }
 
 
-    public static TraceContext init(String traceId) {
+    public static TraceContext init(String traceId, boolean debugMode) {
         TraceContext context = get();
 
-        context.traceId = Objects.nonNull(traceId) ? traceId : DtiGenerator.generate();
+        context.traceId     = Objects.nonNull(traceId) ? traceId : DtiGenerator.generate();
+        context.debugMode   = debugMode;
 
         return context;
     }

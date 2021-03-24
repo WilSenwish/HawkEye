@@ -1,6 +1,7 @@
 package com.littleyes.collector.core;
 
 import com.littleyes.collector.buf.PerformanceLogBuffer;
+import com.littleyes.collector.sample.HawkEyeSampleConfig;
 import com.littleyes.collector.sample.HawkEyeSampleDecisionManager;
 import com.littleyes.collector.util.Mappings;
 import com.littleyes.common.config.HawkEyeConfig;
@@ -33,6 +34,8 @@ import static com.littleyes.collector.util.Constants.*;
 public class HawkEyeApiFilter implements Filter {
 
     private static ExecutorService sampler = HawkEyeExecutors.newThreadExecutor("Sampler", 16);
+    private static String debugMarker = HawkEyeSampleConfig.getInstance()
+            .getProperty("debugSample", DEFAULT_DEBUG_MARKER_KEY);
 
     private final Set<String> excludeUrls       = new LinkedHashSet<>();
     private final Set<String> excludePrefixes   = new LinkedHashSet<>();
@@ -109,8 +112,7 @@ public class HawkEyeApiFilter implements Filter {
     }
 
     private void initTraceContext(HttpServletRequest req, HttpServletResponse res) {
-        TraceContext context = TraceContext.init(extractTraceId(req));
-        // TODO Debug Mode setting
+        TraceContext context = TraceContext.init(extractTraceId(req), extractTraceDebugSwitch(req));
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
         res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
@@ -124,6 +126,15 @@ public class HawkEyeApiFilter implements Filter {
         }
 
         return traceId;
+    }
+
+    private boolean extractTraceDebugSwitch(HttpServletRequest req) {
+        String traceDebugSwitch = req.getHeader(debugMarker);
+        if (Objects.isNull(traceDebugSwitch)) {
+            traceDebugSwitch = req.getParameter(debugMarker);
+        }
+
+        return Boolean.parseBoolean(traceDebugSwitch);
     }
 
     private boolean isExcludePath(String path) {
