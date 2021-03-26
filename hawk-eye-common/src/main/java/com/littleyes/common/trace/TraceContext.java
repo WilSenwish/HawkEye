@@ -25,7 +25,7 @@ public class TraceContext {
 
     private String  traceId;
     private boolean debugMode;
-    private List<PerformanceLogDto> performanceLogs = new ArrayList<>();
+    private List<PerformanceLogDto> performanceLogs;
 
 
     public String getTraceId() {
@@ -36,30 +36,28 @@ public class TraceContext {
         return debugMode;
     }
 
-    public void setDebugMode(boolean debugMode) {
-        this.debugMode = debugMode;
-    }
-
     public List<PerformanceLogDto> getPerformanceLogs() {
         return performanceLogs;
     }
 
     public void addPerformanceLog(PerformanceLogDto performanceLog) {
         this.performanceLogs.add(performanceLog);
+
         if (isDebugMode()) {
             log.info("{} {}", HAWK_EYE_COMMON, performanceLog);
         }
     }
 
     private TraceContext() {
+        this.performanceLogs = new ArrayList<>();
     }
 
 
     public static TraceContext init(String traceId, boolean debugMode) {
-        TraceContext context = get();
+        TraceContext context    = get();
 
-        context.traceId     = Objects.nonNull(traceId) ? traceId : DtiGenerator.generate();
-        context.debugMode   = debugMode;
+        context.traceId         = Objects.nonNull(traceId) ? traceId : DtiGenerator.generate();
+        context.debugMode       = debugMode;
 
         return context;
     }
