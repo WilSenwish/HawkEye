@@ -10,6 +10,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.littleyes.collector.sample.HawkEyeSampleDecisionManager.DEFAULT_SAMPLE_RATE_BASE;
+import static com.littleyes.collector.sample.HawkEyeSampleDecisionManager.GLOBAL_SAMPLE_RATE_KEY;
+
 /**
  * <p> <b> 全局兜底采样决策 </b> </p>
  *
@@ -18,10 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class HawkEyeGlobalSampleDecision implements SampleDecision {
 
-    public static final int DEFAULT_SAMPLE_RATE_BASE = 100;
-
     private boolean globalSampleEnabled;
-    private boolean fullSampleRate;
 
     private int globalSampleRateBase;
     private AtomicInteger globalSampleDataIndex = new AtomicInteger();
@@ -35,7 +35,7 @@ public class HawkEyeGlobalSampleDecision implements SampleDecision {
 
     @Override
     public void init(Properties config) {
-        int globalSampleRate        = Integer.parseInt(config.getProperty("globalSampleRate", "20"));
+        int globalSampleRate        = Integer.parseInt(config.getProperty(GLOBAL_SAMPLE_RATE_KEY, "20"));
         this.globalSampleEnabled    = globalSampleRate > 0;
         if (this.globalSampleEnabled) {
             initGlobalSampleConfigParams(globalSampleRate);
@@ -44,11 +44,9 @@ public class HawkEyeGlobalSampleDecision implements SampleDecision {
 
     @Override
     public boolean decide(TraceContext context, SampleDecisionChain chain) {
-        // 符合全部或部分采样率则采集
-        if (this.globalSampleEnabled) {
-           if (this.fullSampleRate || needSample()) {
-               return true;
-           }
+        // 符合部分采样率则采集
+        if (this.globalSampleEnabled && needSample()) {
+            return true;
         }
 
         return chain.decide(context);
@@ -61,20 +59,17 @@ public class HawkEyeGlobalSampleDecision implements SampleDecision {
 
     private void initGlobalSampleConfigParams(int globalSampleRate) {
         globalSampleRate = extractConfiguredGlobalSampleRate(globalSampleRate);
-        this.fullSampleRate = (DEFAULT_SAMPLE_RATE_BASE == globalSampleRate);
 
-        if (!this.fullSampleRate) {
-            if (DEFAULT_SAMPLE_RATE_BASE % globalSampleRate == 0) {
-                this.globalSampleRateBase = DEFAULT_SAMPLE_RATE_BASE / globalSampleRate;
-                globalSampleRate = 1;
-            } else {
-                this.globalSampleRateBase = DEFAULT_SAMPLE_RATE_BASE;
-            }
+        if (DEFAULT_SAMPLE_RATE_BASE % globalSampleRate == 0) {
+            this.globalSampleRateBase = DEFAULT_SAMPLE_RATE_BASE / globalSampleRate;
+            globalSampleRate = 1;
+        } else {
+            this.globalSampleRateBase = DEFAULT_SAMPLE_RATE_BASE;
+        }
 
-            SecureRandom random = new SecureRandom();
-            while (this.globalSampleIndexes.size() < globalSampleRate) {
-                this.globalSampleIndexes.add(random.nextInt(this.globalSampleRateBase));
-            }
+        SecureRandom random = new SecureRandom();
+        while (this.globalSampleIndexes.size() < globalSampleRate) {
+            this.globalSampleIndexes.add(random.nextInt(this.globalSampleRateBase));
         }
     }
 
