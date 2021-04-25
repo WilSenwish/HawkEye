@@ -53,7 +53,7 @@ public class HawkEyeGlobalSampleDecision implements SampleDecision {
     }
 
     private boolean needSample() {
-        int currentSampleIndex = (this.globalSampleDataIndex.getAndIncrement() % this.globalSampleRateBase);
+        int currentSampleIndex = Math.abs(this.globalSampleDataIndex.getAndIncrement() % this.globalSampleRateBase);
         return this.globalSampleIndexes.contains(currentSampleIndex);
     }
 

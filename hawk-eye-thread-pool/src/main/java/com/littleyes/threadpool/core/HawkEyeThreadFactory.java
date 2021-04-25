@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HawkEyeThreadFactory implements ThreadFactory {
 
     private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1);
+
     private final AtomicInteger threadNumber = new AtomicInteger(1);
 
     private final ThreadGroup group;
