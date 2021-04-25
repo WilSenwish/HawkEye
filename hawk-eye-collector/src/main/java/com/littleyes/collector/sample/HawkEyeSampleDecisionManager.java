@@ -1,5 +1,6 @@
 package com.littleyes.collector.sample;
 
+import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.HawkEyeCollectionUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -24,30 +25,7 @@ public class HawkEyeSampleDecisionManager {
     private static boolean fullSample;
 
     static {
-        Properties sampleConfig = HawkEyeSampleConfig.getInstance();
-        fullSample = isFullSampleRate(sampleConfig);
-
-        if (fullSample) {
-            log.info("{} HawkEyeSampleDecisionManager with fullSample not need sampleDecisions.", HAWK_EYE_COLLECTOR);
-        } else {
-            try {
-                ServiceLoader.load(SampleDecision.class).forEach(sampleDecisions::add);
-            } catch (Exception e) {
-                log.error("{} Load SampleDecisions error: {}", HAWK_EYE_COLLECTOR, e.getMessage(), e);
-            }
-
-            if (HawkEyeCollectionUtils.isNotEmpty(sampleDecisions)) {
-                sampleDecisions.sort(Comparator.comparing(SampleDecision::order));
-                for (SampleDecision sampleDecision : sampleDecisions) {
-                    log.info("{} Loaded SampleDecision [{}]", HAWK_EYE_COLLECTOR, sampleDecision);
-                }
-                log.info("{} Loaded [{}] SampleDecisions", HAWK_EYE_COLLECTOR, sampleDecisions.size());
-
-                sampleDecisions.forEach(e -> e.init(sampleConfig));
-            }
-
-            log.info("{} HawkEyeSampleDecisionManager.sampleDecisions initialized.", HAWK_EYE_COLLECTOR);
-        }
+        initSampleDecisions();
     }
 
     public static void init() {
@@ -64,12 +42,54 @@ public class HawkEyeSampleDecisionManager {
             return true;
         }
 
-        return new HawkEyeSampleDecisionChain(sampleDecisions).decide(context);
+        return HawkEyeSampleDecisionChain.startChainDecide(context, sampleDecisions);
+    }
+
+    private static void initSampleDecisions() {
+        if (HawkEyeConfig.isPerformanceDisabled()) {
+            log.info("{} HawkEyeSampleDecisionManager disabled for performance disabled.", HAWK_EYE_COLLECTOR);
+            return;
+        }
+
+        Properties sampleConfig = HawkEyeSampleConfig.getInstance();
+
+        fullSample = isFullSampleRate(sampleConfig);
+        if (fullSample) {
+            log.info("{} HawkEyeSampleDecisionManager with fullSample not need sampleDecisions.", HAWK_EYE_COLLECTOR);
+            return;
+        }
+
+        loadSampleDecisions();
+        if (HawkEyeCollectionUtils.isEmpty(sampleDecisions)) {
+            return;
+        }
+
+        initializeSampleDecisions(sampleConfig);
+        log.info("{} HawkEyeSampleDecisionManager initialized [{}] SampleDecisions.",
+                HAWK_EYE_COLLECTOR, sampleDecisions.size());
     }
 
     private static boolean isFullSampleRate(Properties config) {
         int globalSampleRate = Integer.parseInt(config.getProperty(GLOBAL_SAMPLE_RATE_KEY, "20"));
         return globalSampleRate >= DEFAULT_SAMPLE_RATE_BASE;
+    }
+
+    private static void loadSampleDecisions() {
+        try {
+            ServiceLoader.load(SampleDecision.class).forEach(sampleDecisions::add);
+            sampleDecisions.sort(Comparator.comparing(SampleDecision::order));
+        } catch (Exception e) {
+            log.error("{} HawkEyeSampleDecisionManager load SampleDecisions error: {}",
+                    HAWK_EYE_COLLECTOR, e.getMessage(), e);
+        }
+    }
+
+    private static void initializeSampleDecisions(Properties sampleConfig) {
+        for (SampleDecision sampleDecision : sampleDecisions) {
+            sampleDecision.init(sampleConfig);
+            log.info("{} HawkEyeSampleDecisionManager load and initialized SampleDecision [{}]",
+                    HAWK_EYE_COLLECTOR, sampleDecision);
+        }
     }
 
 }

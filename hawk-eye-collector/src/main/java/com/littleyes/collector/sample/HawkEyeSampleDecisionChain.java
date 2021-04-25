@@ -16,8 +16,12 @@ public class HawkEyeSampleDecisionChain implements SampleDecisionChain {
 
     private final List<? extends SampleDecision> sampleDecisions;
 
-    HawkEyeSampleDecisionChain(List<? extends SampleDecision> sampleDecisions) {
+    private HawkEyeSampleDecisionChain(List<? extends SampleDecision> sampleDecisions) {
         this.sampleDecisions = sampleDecisions;
+    }
+
+    static boolean startChainDecide(TraceContext context, List<SampleDecision> sampleDecisions) {
+        return new HawkEyeSampleDecisionChain(sampleDecisions).decide(context);
     }
 
     @Override
