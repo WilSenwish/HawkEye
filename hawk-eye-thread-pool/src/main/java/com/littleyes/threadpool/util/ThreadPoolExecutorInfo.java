@@ -115,7 +115,9 @@ public class ThreadPoolExecutorInfo {
      * @return
      */
     public static boolean needThreadPoolExecutorInfo(AtomicLong counter) {
-        return ((counter.get() % 30) == 0) || (counter.get() < 3);
+        long count = counter.get();
+
+        return ((count % 30) == 0) || ((0 < count) && (count < 3));
     }
 
 }
