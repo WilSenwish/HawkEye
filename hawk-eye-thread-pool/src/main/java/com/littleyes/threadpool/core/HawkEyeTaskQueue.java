@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HawkEyeTaskQueue extends LinkedBlockingQueue<Runnable> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private transient volatile HawkEyeThreadPoolExecutor parent = null;
     private boolean discard = true;

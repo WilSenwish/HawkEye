@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Builder
 public class MemoryMetric implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private MemoryArea area;
     private long init;

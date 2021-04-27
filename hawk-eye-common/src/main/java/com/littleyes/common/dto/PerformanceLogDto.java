@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Builder
 public class PerformanceLogDto extends BaseDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private String  event;
     private String  method;

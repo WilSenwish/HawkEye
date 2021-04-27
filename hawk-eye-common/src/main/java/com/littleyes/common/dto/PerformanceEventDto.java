@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 public class PerformanceEventDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private String  projectName;
     private Integer type;

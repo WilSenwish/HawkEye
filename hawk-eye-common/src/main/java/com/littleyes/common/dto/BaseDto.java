@@ -19,7 +19,7 @@ import java.util.Objects;
 @Setter
 public class BaseDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private String  projectName;
     private String  serverIp;

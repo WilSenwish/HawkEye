@@ -21,7 +21,7 @@ import java.util.List;
 @Builder
 public class JvmMetric extends BaseDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private List<GarbageCollectorMetric> garbageCollectorMetrics;
     private List<MemoryMetric> memoryMetrics;

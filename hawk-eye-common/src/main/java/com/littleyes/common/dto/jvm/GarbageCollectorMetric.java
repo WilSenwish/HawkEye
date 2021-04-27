@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Builder
 public class GarbageCollectorMetric implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     private GarbageCollectorPhrase phrase;
     private long count;

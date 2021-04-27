@@ -11,7 +11,7 @@ import com.littleyes.threadpool.core.HawkEyeThreadPoolExecutor;
  */
 public class StopPooledThreadException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 147L;
 
     public StopPooledThreadException(String message) {
         super(message);
