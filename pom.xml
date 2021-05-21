@@ -43,6 +43,7 @@
         <commons-collections4.version>4.1</commons-collections4.version>
         <protostuff.version>1.6.0</protostuff.version>
         <ttl.version>2.11.0</ttl.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
     <!--模块-->
@@ -236,6 +237,21 @@
                 <groupId>io.protostuff</groupId>
                 <artifactId>protostuff-runtime</artifactId>
                 <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>guava</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
             </dependency>
 
             <!--log-->
