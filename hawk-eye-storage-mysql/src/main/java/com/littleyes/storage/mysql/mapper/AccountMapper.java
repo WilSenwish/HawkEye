@@ -1,4 +1,4 @@
-package com.littleyes.storage.mapper;
+package com.littleyes.storage.mysql.mapper;
 
 import com.littleyes.storage.entity.AccountModel;
 import org.apache.ibatis.annotations.Param;

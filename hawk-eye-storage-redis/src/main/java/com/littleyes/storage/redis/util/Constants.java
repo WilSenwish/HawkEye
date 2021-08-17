@@ -1,4 +1,4 @@
-package com.littleyes.storage.util;
+package com.littleyes.storage.redis.util;
 
 /**
  * <p> <b> 常量 </b> </p>

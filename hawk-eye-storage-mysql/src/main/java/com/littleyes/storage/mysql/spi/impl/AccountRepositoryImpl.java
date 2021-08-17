@@ -1,9 +1,9 @@
-package com.littleyes.storage.spi.impl;
+package com.littleyes.storage.mysql.spi.impl;
 
 import com.littleyes.common.core.SPI;
 import com.littleyes.common.util.SpringContextHolder;
 import com.littleyes.storage.entity.AccountModel;
-import com.littleyes.storage.mapper.AccountMapper;
+import com.littleyes.storage.mysql.mapper.AccountMapper;
 import com.littleyes.storage.spi.AccountRepository;
 
 /**

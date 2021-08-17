@@ -1,9 +1,9 @@
-package com.littleyes.storage.spi.impl;
+package com.littleyes.storage.redis.spi.impl;
 
 import com.littleyes.common.core.SPI;
 import com.littleyes.common.util.LRUCache;
+import com.littleyes.common.util.web.ValidateCode;
 import com.littleyes.storage.spi.ValidateCodeRepository;
-import com.littleyes.storage.util.ValidateCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.littleyes.storage.util.Constants.HAWK_REDIS_STORAGE;
+import static com.littleyes.storage.redis.util.Constants.HAWK_REDIS_STORAGE;
 
 /**
  * <p> <b> AccountRepositoryImpl </b> </p>
@@ -22,7 +22,7 @@ import static com.littleyes.storage.util.Constants.HAWK_REDIS_STORAGE;
  */
 @Slf4j
 @SPI
-public class ValidateCodeRepositoryImpl implements ValidateCodeRepository {
+public class RedisValidateCodeRepositoryImpl implements ValidateCodeRepository {
 
     private static final int CAPACITY = 1 << 10;
 

@@ -1,1 +1,1 @@
-com.littleyes.storage.spi.impl.ValidateCodeRepositoryImpl
+com.littleyes.storage.redis.spi.impl.RedisValidateCodeRepositoryImpl

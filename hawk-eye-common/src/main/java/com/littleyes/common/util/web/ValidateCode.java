@@ -1,4 +1,4 @@
-package com.littleyes.storage.util;
+package com.littleyes.common.util.web;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
