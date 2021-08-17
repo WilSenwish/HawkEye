@@ -1,5 +1,6 @@
-package com.littleyes.common.dto;
+package com.littleyes.common.dto.alarm;
 
+import com.littleyes.common.dto.BaseDto;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,6 +24,10 @@ public class AlarmMessageDto extends BaseDto implements Serializable {
 
     private long start;
     private long end;
+
+    private String metric;
+    private MetricValType metricValType;
+    private Object metricVal;
 
     private boolean abnormal;
     private String  abnormalMessage;

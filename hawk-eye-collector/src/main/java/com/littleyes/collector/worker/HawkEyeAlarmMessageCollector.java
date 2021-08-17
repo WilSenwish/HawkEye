@@ -2,7 +2,7 @@ package com.littleyes.collector.worker;
 
 import com.littleyes.collector.spi.AlarmMessageDelivery;
 import com.littleyes.common.core.PluginLoader;
-import com.littleyes.common.dto.AlarmMessageDto;
+import com.littleyes.common.dto.alarm.AlarmMessageDto;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

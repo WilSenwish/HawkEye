@@ -1,7 +1,7 @@
 package com.littleyes.collector.spi;
 
 import com.littleyes.common.core.SPI;
-import com.littleyes.common.dto.AlarmMessageDto;
+import com.littleyes.common.dto.alarm.AlarmMessageDto;
 
 import java.util.List;
 

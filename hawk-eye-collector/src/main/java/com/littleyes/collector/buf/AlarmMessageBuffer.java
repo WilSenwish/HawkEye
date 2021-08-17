@@ -2,7 +2,7 @@ package com.littleyes.collector.buf;
 
 import com.littleyes.collector.worker.HawkEyeAlarmMessageCollector;
 import com.littleyes.common.config.HawkEyeConfig;
-import com.littleyes.common.dto.AlarmMessageDto;
+import com.littleyes.common.dto.alarm.AlarmMessageDto;
 import com.littleyes.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
