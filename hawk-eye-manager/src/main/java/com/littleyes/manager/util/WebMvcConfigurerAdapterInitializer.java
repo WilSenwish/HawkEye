@@ -26,7 +26,7 @@ public class WebMvcConfigurerAdapterInitializer implements WebMvcConfigurer {
                 .addInterceptor(new AuthenticationInterceptor(authService))
                 .addPathPatterns("/**")
                 .excludePathPatterns("/auth/**")
-                .excludePathPatterns("/health/**")
+                .excludePathPatterns("/hawk-eye/health/**")
                 .order(Ordered.LOWEST_PRECEDENCE);
     }
 
