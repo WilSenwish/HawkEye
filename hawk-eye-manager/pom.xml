@@ -26,6 +26,10 @@
         </dependency>
         <dependency>
             <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-storage-local</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-storage-mysql</artifactId>
         </dependency>
         <dependency>

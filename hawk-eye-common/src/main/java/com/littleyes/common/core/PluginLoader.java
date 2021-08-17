@@ -119,7 +119,7 @@ public class PluginLoader<T> {
 
         T instance = instances.stream()
                 .min(Comparator.comparing(e -> e.getClass().getAnnotation(SPI.class).order()))
-                .orElseThrow(() -> new NullPointerException("Plugin of type[" + type.getName() + "] not found!!!"));
+                .orElseThrow(() -> new PluginNotFoundException("Plugin of type[" + type.getName() + "] not found!!!"));
 
         instance = injectPlugin(instance);
         if (wrap) {

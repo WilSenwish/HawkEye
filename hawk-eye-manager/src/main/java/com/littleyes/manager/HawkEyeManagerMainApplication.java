@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021-02-19
  */
 @EnableAutoConfiguration
-@MapperScan(basePackages = {"com.littleyes.storage.mapper"})
+@MapperScan(basePackages = {"com.littleyes.storage.mysql.mapper"})
 @SpringBootApplication(scanBasePackages = {"com"})
 public class HawkEyeManagerMainApplication {
 

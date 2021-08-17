@@ -108,6 +108,11 @@
             </dependency>
             <dependency>
                 <groupId>${hawk-eye.group}</groupId>
+                <artifactId>${hawk-eye.artifact}-storage-local</artifactId>
+                <version>${hawk-eye.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${hawk-eye.group}</groupId>
                 <artifactId>${hawk-eye.artifact}-storage-mysql</artifactId>
                 <version>${hawk-eye.version}</version>
             </dependency>
