@@ -30,6 +30,7 @@ public class HawkEyeConfig {
     private static long     collectorSpinWaitMills  = 30L;
     private static boolean  performanceEnabled      = false;
     private static boolean  loggingEnabled          = false;
+    private static boolean  alarmEnabled            = false;
     private static String   loggingCollectLevel     = "INFO";
 
     static {
@@ -53,6 +54,7 @@ public class HawkEyeConfig {
             collectorSpinWaitMills  = Long.parseLong(properties.getProperty("hawk-eye.collector-spin-wait-mills", "30"));
             performanceEnabled      = Boolean.parseBoolean(properties.getProperty("hawk-eye.performance-enabled",  "false"));
             loggingEnabled          = Boolean.parseBoolean(properties.getProperty("hawk-eye.logging-enabled",  "false"));
+            alarmEnabled            = Boolean.parseBoolean(properties.getProperty("hawk-eye.alarm-enabled",  "false"));
             loggingCollectLevel     = properties.getProperty("hawk-eye.logging-collect-level", loggingCollectLevel);
         } catch (Exception e) {
             log.error("{} Load config[{}] error：{}", HAWK_EYE_COMMON, CONF_RESOURCE_NAME, e.getMessage());
@@ -94,6 +96,14 @@ public class HawkEyeConfig {
 
     public static boolean isLoggingDisabled() {
         return !isLoggingEnabled();
+    }
+
+    public static boolean isAlarmEnabled() {
+        return alarmEnabled;
+    }
+
+    public static boolean isAlarmDisabled() {
+        return !isAlarmEnabled();
     }
 
     public static String getLoggingCollectLevel() {
