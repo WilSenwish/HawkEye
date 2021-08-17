@@ -1,4 +1,4 @@
-package com.littleyes.common.util;
+package com.littleyes.common.util.web;
 
 /**
  * <p> <b> 统一异常 </b> </p>

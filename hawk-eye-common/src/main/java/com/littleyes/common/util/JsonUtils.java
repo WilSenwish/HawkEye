@@ -2,6 +2,7 @@ package com.littleyes.common.util;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +60,10 @@ public class JsonUtils {
      * @return
      */
     public static <T> T convertObject(Object obj, Class<T> clazz) {
+        if (Objects.isNull(obj)) {
+            return null;
+        }
+
         return parseObject(toString(obj), clazz);
     }
 
@@ -70,6 +75,13 @@ public class JsonUtils {
      * @return
      */
     public static <T> List<T> convertList(List<?> objects, Class<T> clazz) {
+        if (Objects.isNull(objects)) {
+            return null;
+        }
+        if (CollectionUtils.isEmpty(objects)) {
+            return Collections.emptyList();
+        }
+
         return parseList(toString(objects), clazz);
     }
 
@@ -84,7 +96,7 @@ public class JsonUtils {
             return null;
         }
 
-        return parseObject(toString(obj), (Class<T>) obj.getClass());
+        return convertObject(obj, (Class<T>) obj.getClass());
     }
 
     /**
@@ -102,7 +114,7 @@ public class JsonUtils {
             return Collections.emptyList();
         }
 
-        return parseList(toString(objects), (Class<T>) objects.get(0).getClass());
+        return convertList(objects, (Class<T>) objects.get(0).getClass());
     }
 
 }

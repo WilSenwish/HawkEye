@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Junbing.Chen
  * @date 2021-02-20
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 @Getter
 @Builder

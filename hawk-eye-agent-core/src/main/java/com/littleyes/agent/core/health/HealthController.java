@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021-02-19
  */
 @RestController
-@RequestMapping("health")
+@RequestMapping("hawk-eye/health")
 public class HealthController {
 
     @GetMapping("ping")

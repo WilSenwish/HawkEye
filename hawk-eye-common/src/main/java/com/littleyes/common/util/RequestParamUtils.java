@@ -1,7 +1,5 @@
 package com.littleyes.common.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -19,12 +17,7 @@ public class RequestParamUtils {
     }
 
     public static String json(HttpServletRequest request) {
-        Map<String, Object> paramMap = map(request);
-        if (paramMap.isEmpty()) {
-            return StringUtils.EMPTY;
-        }
-
-        return JsonUtils.toString(paramMap);
+        return JsonUtils.toString(map(request));
     }
 
     public static Map<String, Object> map(HttpServletRequest request) {

@@ -1,6 +1,6 @@
 package com.littleyes.manager.util;
 
-import com.littleyes.common.util.ApiResponse;
+import com.littleyes.common.util.web.ApiResponse;
 import com.littleyes.common.util.JsonUtils;
 import com.littleyes.manager.service.AuthService;
 import com.littleyes.storage.entity.AccountModel;

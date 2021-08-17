@@ -11,14 +11,14 @@ import java.lang.instrument.Instrumentation;
 public class HawkEyeAgent {
 
     public static void premain(String agentArgs, Instrumentation instrumentation) {
-        agent(agentArgs, instrumentation);
+        main(agentArgs, instrumentation);
     }
 
     public static void agentmain(String agentArgs, Instrumentation instrumentation) {
-        agent(agentArgs, instrumentation);
+        main(agentArgs, instrumentation);
     }
 
-    private static void agent(String agentArgs, Instrumentation instrumentation) {
+    private static void main(String agentArgs, Instrumentation instrumentation) {
         // TODO Agent entrance
     }
 

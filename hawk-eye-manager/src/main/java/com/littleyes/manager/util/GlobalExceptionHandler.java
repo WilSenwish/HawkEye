@@ -1,7 +1,7 @@
 package com.littleyes.manager.util;
 
-import com.littleyes.common.util.ApiException;
-import com.littleyes.common.util.ApiResponse;
+import com.littleyes.common.util.web.ApiException;
+import com.littleyes.common.util.web.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

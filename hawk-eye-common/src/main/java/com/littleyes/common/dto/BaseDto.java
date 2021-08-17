@@ -3,6 +3,7 @@ package com.littleyes.common.dto;
 import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.IpUtils;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ import java.util.Objects;
  * @author Junbing.Chen
  * @date 2021-02-19
  */
+@EqualsAndHashCode
 @Getter
 @Setter
 public class BaseDto implements Serializable {

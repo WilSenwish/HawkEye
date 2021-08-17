@@ -1,7 +1,7 @@
 package com.littleyes.collector.util;
 
 import com.littleyes.common.config.HawkEyeConfig;
-import com.littleyes.common.util.ApiResponse;
+import com.littleyes.common.util.web.ApiResponse;
 import com.littleyes.common.util.JsonUtils;
 
 import javax.servlet.http.HttpServletResponse;

@@ -1,7 +1,7 @@
 package com.littleyes.manager.service.impl;
 
 import com.littleyes.common.core.PluginLoader;
-import com.littleyes.common.util.ApiException;
+import com.littleyes.common.util.web.ApiException;
 import com.littleyes.common.util.LRUCache;
 import com.littleyes.manager.query.LoginQuery;
 import com.littleyes.manager.service.AuthService;

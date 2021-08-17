@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Junbing.Chen
  * @date 2021-02-19
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 @Getter
 @Builder
@@ -43,7 +43,7 @@ public class LoggingLogDto extends BaseDto implements Serializable {
     @Override
     public void initBase() {
         super.initBase();
-        time = DateTimeFormatterEnum.TIME.format(timestamp);
+        time = DateTimeFormatterEnum.MILLIS.format(timestamp);
     }
 
 }

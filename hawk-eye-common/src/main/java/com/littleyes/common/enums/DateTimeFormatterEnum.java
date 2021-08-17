@@ -1,7 +1,9 @@
 package com.littleyes.common.enums;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ public enum DateTimeFormatterEnum {
     /**
      * 具体到毫秒的时间
      */
-    TIME(FastDateFormat.getInstance("yyyyMMddHHmmssSSS")),
+    MILLIS(FastDateFormat.getInstance("yyyyMMddHHmmssSSS")),
     /**
      * 分钟
      */
@@ -39,6 +41,24 @@ public enum DateTimeFormatterEnum {
         }
 
         return format(date.getTime());
+    }
+
+    public Date parse(String timeString) throws ParseException {
+        if (StringUtils.isBlank(timeString)) {
+            return null;
+        }
+
+        return format.parse(timeString);
+    }
+
+    public long parseMillis(String timeString) throws ParseException {
+        Date time = parse(timeString);
+
+        if (Objects.isNull(time)) {
+            return 0L;
+        }
+
+        return time.getTime();
     }
 
 }
