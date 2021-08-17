@@ -15,9 +15,13 @@
     服务
 08. storage  
     存储
-09. storage-mysql  
-    mysql存储
-10. thread-pool  
+    01. storage-local  
+        本地存储
+    02. storage-mysql  
+        mysql存储
+    03. storage-redis  
+        redis存储
+09. thread-pool  
     自定义可监控线程池
-11. webapp  
+10. webapp  
     管理UI
