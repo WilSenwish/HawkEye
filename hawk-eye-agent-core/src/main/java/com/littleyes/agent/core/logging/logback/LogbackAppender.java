@@ -11,6 +11,8 @@ import com.littleyes.common.dto.LoggingLogDto;
 import com.littleyes.common.config.HawkEyeConfig;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.TtlMDCAdapter;
+import org.slf4j.spi.MDCAdapter;
 
 import java.util.Objects;
 
@@ -47,6 +49,10 @@ public class LogbackAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         addInfo(HAWK_EYE_AGENT + " LogbackAppender Starting...");
         super.start();
         addInfo(HAWK_EYE_AGENT + " LogbackAppender Started.");
+
+        addInfo(HAWK_EYE_AGENT + " LogbackAppender MDCAdapter Initializing...");
+        MDCAdapter instance = TtlMDCAdapter.getInstance();
+        addInfo(HAWK_EYE_AGENT + " LogbackAppender MDCAdapter Initialized is " + instance.getClass());
     }
 
     @Override

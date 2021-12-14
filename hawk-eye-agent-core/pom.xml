@@ -26,6 +26,10 @@
         </dependency>
         <dependency>
             <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-mdc-ttl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-thread-pool</artifactId>
         </dependency>
 

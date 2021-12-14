@@ -1,6 +1,7 @@
 package com.littleyes.collector.core;
 
 import com.littleyes.collector.buf.PerformanceLogBuffer;
+import com.littleyes.collector.logging.HawkEyeMdc;
 import com.littleyes.collector.sample.HawkEyeSampleConfig;
 import com.littleyes.collector.sample.HawkEyeSampleDecisionManager;
 import com.littleyes.collector.util.Mappings;
@@ -75,7 +76,7 @@ public class HawkEyeApiFilter implements Filter {
                 return;
             }
 
-            if (HawkEyeConfig.isPerformanceEnabled() && isNotOptions(req) && isIncludePath(uri)) {
+            if (isNotOptions(req) && isIncludePath(uri)) {
                 this.doFilterInternal(req, res, chain);
             } else {
                 chain.doFilter(request, response);
@@ -96,18 +97,20 @@ public class HawkEyeApiFilter implements Filter {
             chain.doFilter(req, res);
             success = true;
         } finally {
-            PerformanceContext context = PerformanceContext.init(
-                    req.getRequestURI(),
-                    req.getMethod(),
-                    PerformanceTypeEnum.API.getType(),
-                    success,
-                    start,
-                    System.currentTimeMillis()
-            );
-            context.setParameters(RequestParamUtils.map(req));
-            TraceContext.append(PerformanceTypeEnum.API.getType());
+            if (HawkEyeConfig.isPerformanceEnabled()) {
+                PerformanceContext context = PerformanceContext.init(
+                        req.getRequestURI(),
+                        req.getMethod(),
+                        PerformanceTypeEnum.API.getType(),
+                        success,
+                        start,
+                        System.currentTimeMillis()
+                );
+                context.setParameters(RequestParamUtils.map(req));
+                TraceContext.append(PerformanceTypeEnum.API.getType());
 
-            sampler.execute(new SampleRunnable());
+                sampler.execute(new SampleRunnable());
+            }
         }
     }
 
@@ -117,6 +120,8 @@ public class HawkEyeApiFilter implements Filter {
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
         res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
         res.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
+
+        HawkEyeMdc.put(context.getTraceId());
     }
 
     private String extractTraceId(HttpServletRequest req) {
