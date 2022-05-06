@@ -26,10 +26,13 @@ public class JvmMetricBuffer {
     private static HawkEyeJvmMetricCollector hawkEyeJvmMetricCollector;
 
     static {
-        new JvmMetricBuffer();
+        initialize();
     }
 
     private JvmMetricBuffer() {
+    }
+
+    private static void initialize() {
         if (HawkEyeConfig.isPerformanceDisabled()) {
             log.info("{} Performance monitor disabled!!!", HAWK_EYE_COLLECTOR);
             return;

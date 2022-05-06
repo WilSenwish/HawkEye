@@ -26,10 +26,13 @@ public class LoggingLogBuffer {
     private static HawkEyeLoggingCollector hawkEyeLoggingCollector;
 
     static {
-        new LoggingLogBuffer();
+        initialize();
     }
 
     private LoggingLogBuffer() {
+    }
+
+    private static void initialize() {
         if (HawkEyeConfig.isLoggingDisabled()) {
             log.info("{} Logging monitor disabled!!!", HAWK_EYE_COLLECTOR);
             return;

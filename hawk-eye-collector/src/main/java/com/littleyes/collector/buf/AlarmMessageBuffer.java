@@ -26,10 +26,13 @@ public class AlarmMessageBuffer {
     private static HawkEyeAlarmMessageCollector hawkEyeAlarmMessageCollector;
 
     static {
-        new AlarmMessageBuffer();
+        initialize();
     }
 
     private AlarmMessageBuffer() {
+    }
+
+    private static void initialize() {
         if (HawkEyeConfig.isAlarmDisabled()) {
             log.info("{} Alarm disabled!!!", HAWK_EYE_COLLECTOR);
             return;
