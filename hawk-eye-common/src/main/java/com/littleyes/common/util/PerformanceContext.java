@@ -2,12 +2,8 @@ package com.littleyes.common.util;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.littleyes.common.dto.PerformanceLogDto;
-import com.littleyes.common.enums.PerformanceTypeEnum;
-import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,21 +24,6 @@ public class PerformanceContext {
     private boolean success;
     private long start;
     private long end;
-
-    @Setter
-    private String sql;
-    @Setter
-    private Map<String, Object> parameters = Collections.emptyMap();
-
-    private String getBody() {
-        if (PerformanceTypeEnum.API.getType().equals(type)) {
-            return JsonUtils.toString(parameters);
-        } else if (PerformanceTypeEnum.MYSQL.getType().equals(type)) {
-            return sql;
-        }
-
-        return StringUtils.EMPTY;
-    }
 
     private PerformanceContext(String event, String method, int type, boolean success, long start, long end) {
         this.event = event;
@@ -72,7 +53,6 @@ public class PerformanceContext {
                 .success(context.success)
                 .start(context.start)
                 .end(context.end)
-                .body(context.getBody())
                 .build();
 
         performanceLog.initTrace();

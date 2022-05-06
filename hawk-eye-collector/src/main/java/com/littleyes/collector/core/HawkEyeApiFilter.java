@@ -9,11 +9,15 @@ import com.littleyes.common.config.HawkEyeConfig;
 import com.littleyes.common.enums.PerformanceTypeEnum;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.PerformanceContext;
-import com.littleyes.common.util.RequestParamUtils;
 import com.littleyes.threadpool.util.HawkEyeExecutors;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,7 +27,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-import static com.littleyes.collector.util.Constants.*;
+import static com.littleyes.collector.util.Constants.DEFAULT_DEBUG_MARKER_KEY;
+import static com.littleyes.collector.util.Constants.GIT_COMMIT_ID_KEY;
+import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
+import static com.littleyes.collector.util.Constants.OPTIONS_METHOD;
+import static com.littleyes.collector.util.Constants.PROJECT_NAME_KEY;
+import static com.littleyes.collector.util.Constants.TRACE_ID_KEY;
 
 /**
  * <p> <b> Api Filter </b> </p>
@@ -104,7 +113,7 @@ public class HawkEyeApiFilter implements Filter {
             success = true;
         } finally {
             if (HawkEyeConfig.isPerformanceEnabled()) {
-                PerformanceContext context = PerformanceContext.init(
+                PerformanceContext.init(
                         req.getRequestURI(),
                         req.getMethod(),
                         PerformanceTypeEnum.API.getType(),
@@ -112,7 +121,6 @@ public class HawkEyeApiFilter implements Filter {
                         start,
                         System.currentTimeMillis()
                 );
-                context.setParameters(RequestParamUtils.map(req));
                 TraceContext.append(PerformanceTypeEnum.API.getType());
 
                 sampler.execute(new SampleRunnable());

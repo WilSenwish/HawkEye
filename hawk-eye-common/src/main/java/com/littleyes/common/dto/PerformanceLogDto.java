@@ -31,8 +31,6 @@ public class PerformanceLogDto extends BaseDto implements Serializable {
     private long minute;
     private long timeConsume;
 
-    private String body;
-
     @Override
     public void initBase() {
         super.initBase();

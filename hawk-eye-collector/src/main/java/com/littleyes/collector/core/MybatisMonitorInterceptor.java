@@ -57,7 +57,7 @@ public class MybatisMonitorInterceptor implements Interceptor {
             returnObj = invocation.proceed();
             success = true;
         } finally {
-            PerformanceContext context = PerformanceContext.init(
+            PerformanceContext.init(
                     mappedStatement.getId(),
                     commandType,
                     PerformanceTypeEnum.MYSQL.getType(),
@@ -65,7 +65,7 @@ public class MybatisMonitorInterceptor implements Interceptor {
                     start,
                     System.currentTimeMillis()
             );
-            context.setSql(sql);
+            // TODO sql
             TraceContext.append(PerformanceTypeEnum.MYSQL.getType());
         }
 
