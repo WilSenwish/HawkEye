@@ -2,6 +2,7 @@ package com.littleyes.collector.sample.impl;
 
 import com.littleyes.collector.sample.SampleDecision;
 import com.littleyes.collector.sample.SampleDecisionChain;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.trace.TraceContext;
 
 import java.util.Properties;
@@ -12,7 +13,7 @@ import java.util.Properties;
  * @author Junbing.Chen
  * @date 2021-03-19
  */
-public class HawkEyeServiceSlowSampleDecision implements SampleDecision {
+public class HawkEyeServiceSlowPostSampleDecision implements SampleDecision {
 
     private boolean serviceSlowEnabled;
     private long serviceSlowMillis;
@@ -29,17 +30,17 @@ public class HawkEyeServiceSlowSampleDecision implements SampleDecision {
     }
 
     @Override
-    public boolean decide(TraceContext context, SampleDecisionChain chain) {
+    public boolean postDecide(TraceContext context, PerformanceLogDto performanceLog, SampleDecisionChain chain) {
         // 服务响应慢则采集
-        if (this.serviceSlowEnabled && requestServiceSlow(context)) {
+        if (this.serviceSlowEnabled && requestServiceSlow(performanceLog)) {
             return true;
         }
 
-        return chain.decide(context);
+        return chain.postDecide(context, performanceLog);
     }
 
-    private boolean requestServiceSlow(TraceContext context) {
-        return context.getPerformanceLogs().stream().anyMatch(e -> e.getTimeConsume() > serviceSlowMillis);
+    private boolean requestServiceSlow(PerformanceLogDto performanceLog) {
+        return performanceLog.getTimeConsume() > serviceSlowMillis;
     }
 
 }

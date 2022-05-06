@@ -1,11 +1,17 @@
 package com.littleyes.collector.sample;
 
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.trace.TraceContext;
 import com.littleyes.common.util.HawkEyeCollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+import java.util.ServiceLoader;
 
 import static com.littleyes.collector.util.Constants.HAWK_EYE_COLLECTOR;
 
@@ -21,14 +27,12 @@ public class HawkEyeSampleDecisionManager {
     public static final int DEFAULT_SAMPLE_RATE_BASE = 100;
     public static final String GLOBAL_SAMPLE_RATE_KEY = "globalSampleRate";
 
-    private static List<SampleDecision> sampleDecisions = new LinkedList<>();
+    private static List<SampleDecision> preSampleDecisions = new LinkedList<>();
+    private static List<SampleDecision> postSampleDecisions = new LinkedList<>();
     private static boolean fullSample;
 
     static {
         initSampleDecisions();
-    }
-
-    public static void init() {
     }
 
     /**
@@ -37,12 +41,29 @@ public class HawkEyeSampleDecisionManager {
      * @param context
      * @return
      */
-    public static boolean decide(TraceContext context) {
+    public static void preDecide(TraceContext context) {
         if (fullSample) {
+            return;
+        }
+
+        HawkEyeSampleDecisionChain
+                .startChainPreDecide(context, Collections.unmodifiableList(postSampleDecisions));
+    }
+
+    /**
+     * 决策链决策入口
+     *
+     * @param context
+     * @param performanceLog
+     * @return
+     */
+    public static boolean postDecide(TraceContext context, PerformanceLogDto performanceLog) {
+        if (fullSample || context.isNeedSample()) {
             return true;
         }
 
-        return HawkEyeSampleDecisionChain.startChainDecide(context, sampleDecisions);
+        return HawkEyeSampleDecisionChain
+                .startChainPostDecide(context, performanceLog, Collections.unmodifiableList(postSampleDecisions));
     }
 
     private static void initSampleDecisions() {
@@ -60,13 +81,13 @@ public class HawkEyeSampleDecisionManager {
         }
 
         loadSampleDecisions();
-        if (HawkEyeCollectionUtils.isEmpty(sampleDecisions)) {
+        if (HawkEyeCollectionUtils.isEmpty(preSampleDecisions) && HawkEyeCollectionUtils.isEmpty(postSampleDecisions)) {
             return;
         }
 
         initializeSampleDecisions(sampleConfig);
         log.info("{} HawkEyeSampleDecisionManager initialized [{}] SampleDecisions.",
-                HAWK_EYE_COLLECTOR, sampleDecisions.size());
+                HAWK_EYE_COLLECTOR, (preSampleDecisions.size() + postSampleDecisions.size()));
     }
 
     private static boolean isFullSampleRate(Properties config) {
@@ -76,8 +97,16 @@ public class HawkEyeSampleDecisionManager {
 
     private static void loadSampleDecisions() {
         try {
-            ServiceLoader.load(SampleDecision.class).forEach(sampleDecisions::add);
-            sampleDecisions.sort(Comparator.comparing(SampleDecision::order));
+            ServiceLoader.load(SampleDecision.class).forEach(sd -> {
+                if (sd.isPreDecision()) {
+                    preSampleDecisions.add(sd);
+                } else {
+                    postSampleDecisions.add(sd);
+                }
+            });
+
+            preSampleDecisions.sort(Comparator.comparing(SampleDecision::order));
+            postSampleDecisions.sort(Comparator.comparing(SampleDecision::order));
         } catch (Exception e) {
             log.error("{} HawkEyeSampleDecisionManager load SampleDecisions error: {}",
                     HAWK_EYE_COLLECTOR, e.getMessage(), e);
@@ -85,7 +114,12 @@ public class HawkEyeSampleDecisionManager {
     }
 
     private static void initializeSampleDecisions(Properties sampleConfig) {
-        for (SampleDecision sampleDecision : sampleDecisions) {
+        for (SampleDecision sampleDecision : preSampleDecisions) {
+            sampleDecision.init(sampleConfig);
+            log.info("{} HawkEyeSampleDecisionManager load and initialized SampleDecision [{}]",
+                    HAWK_EYE_COLLECTOR, sampleDecision);
+        }
+        for (SampleDecision sampleDecision : postSampleDecisions) {
             sampleDecision.init(sampleConfig);
             log.info("{} HawkEyeSampleDecisionManager load and initialized SampleDecision [{}]",
                     HAWK_EYE_COLLECTOR, sampleDecision);

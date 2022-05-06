@@ -1,8 +1,8 @@
-com.littleyes.collector.sample.impl.HawkEyeBizSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeGlobalSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeOpsSampleDecision
-com.littleyes.collector.sample.impl.HawkEyePressureTestSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeServiceDebugSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeServiceErrorSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeServiceSlowSampleDecision
-com.littleyes.collector.sample.impl.HawkEyeStartWarmUpSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeBizPostSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeGlobalFinalPreSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeOpsPreSampleDecision
+com.littleyes.collector.sample.impl.HawkEyePressureTestPreSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeServiceDebugPreSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeServiceErrorPostSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeServiceSlowPostSampleDecision
+com.littleyes.collector.sample.impl.HawkEyeStartWarmUpPreSampleDecision

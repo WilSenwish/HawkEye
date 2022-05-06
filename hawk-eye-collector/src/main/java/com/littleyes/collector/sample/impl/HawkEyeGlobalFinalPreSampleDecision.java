@@ -19,7 +19,7 @@ import static com.littleyes.collector.sample.HawkEyeSampleDecisionManager.GLOBAL
  * @author Junbing.Chen
  * @date 2021-03-19
  */
-public class HawkEyeGlobalSampleDecision implements SampleDecision {
+public class HawkEyeGlobalFinalPreSampleDecision implements SampleDecision {
 
     private boolean globalSampleEnabled;
 
@@ -37,19 +37,26 @@ public class HawkEyeGlobalSampleDecision implements SampleDecision {
     public void init(Properties config) {
         int globalSampleRate        = Integer.parseInt(config.getProperty(GLOBAL_SAMPLE_RATE_KEY, "20"));
         this.globalSampleEnabled    = globalSampleRate > 0;
+
         if (this.globalSampleEnabled) {
             initGlobalSampleConfigParams(globalSampleRate);
         }
     }
 
     @Override
-    public boolean decide(TraceContext context, SampleDecisionChain chain) {
+    public boolean isPreDecision() {
+        return true;
+    }
+
+    @Override
+    public void preDecide(TraceContext context, SampleDecisionChain chain) {
         // 符合部分采样率则采集
         if (this.globalSampleEnabled && needSample()) {
-            return true;
+            context.setNeedSample(true);
+            return;
         }
 
-        return chain.decide(context);
+        chain.preDecide(context);
     }
 
     private boolean needSample() {

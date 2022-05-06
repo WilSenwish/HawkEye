@@ -2,9 +2,8 @@ package com.littleyes.collector.sample.impl;
 
 import com.littleyes.collector.sample.SampleDecision;
 import com.littleyes.collector.sample.SampleDecisionChain;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.trace.TraceContext;
-
-import java.util.Properties;
 
 /**
  * <p> <b> 服务异常采样决策 </b> </p>
@@ -12,7 +11,7 @@ import java.util.Properties;
  * @author Junbing.Chen
  * @date 2021-03-19
  */
-public class HawkEyeServiceErrorSampleDecision implements SampleDecision {
+public class HawkEyeServiceErrorPostSampleDecision implements SampleDecision {
 
     @Override
     public int order() {
@@ -20,22 +19,17 @@ public class HawkEyeServiceErrorSampleDecision implements SampleDecision {
     }
 
     @Override
-    public void init(Properties config) {
-
-    }
-
-    @Override
-    public boolean decide(TraceContext context, SampleDecisionChain chain) {
+    public boolean postDecide(TraceContext context, PerformanceLogDto performanceLog, SampleDecisionChain chain) {
         // 链路节点发生异常则采集
-        if (requestOccursError(context)) {
+        if (requestOccursError(performanceLog)) {
             return true;
         }
 
-        return chain.decide(context);
+        return chain.postDecide(context, performanceLog);
     }
 
-    private boolean requestOccursError(TraceContext context) {
-        return context.getPerformanceLogs().stream().anyMatch(e -> !e.isSuccess());
+    private boolean requestOccursError(PerformanceLogDto performanceLogDto) {
+        return !performanceLogDto.isSuccess();
     }
 
 }

@@ -4,15 +4,13 @@ import com.littleyes.collector.sample.SampleDecision;
 import com.littleyes.collector.sample.SampleDecisionChain;
 import com.littleyes.common.trace.TraceContext;
 
-import java.util.Properties;
-
 /**
  * <p> <b> 服务调试采样决策 </b> </p>
  *
  * @author Junbing.Chen
  * @date 2021-03-19
  */
-public class HawkEyeServiceDebugSampleDecision implements SampleDecision {
+public class HawkEyeServiceDebugPreSampleDecision implements SampleDecision {
 
     @Override
     public int order() {
@@ -20,18 +18,19 @@ public class HawkEyeServiceDebugSampleDecision implements SampleDecision {
     }
 
     @Override
-    public void init(Properties config) {
-
+    public boolean isPreDecision() {
+        return true;
     }
 
     @Override
-    public boolean decide(TraceContext context, SampleDecisionChain chain) {
+    public void preDecide(TraceContext context, SampleDecisionChain chain) {
         // 开启 Debug 调试则采集
         if (context.isDebugMode()) {
-            return true;
+            context.setNeedSample(true);
+            return;
         }
 
-        return chain.decide(context);
+        chain.preDecide(context);
     }
 
 }

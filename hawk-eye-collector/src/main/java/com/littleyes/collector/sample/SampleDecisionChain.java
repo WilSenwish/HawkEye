@@ -1,5 +1,6 @@
 package com.littleyes.collector.sample;
 
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.trace.TraceContext;
 
 /**
@@ -16,6 +17,15 @@ public interface SampleDecisionChain {
      * @param context
      * @return
      */
-    boolean decide(TraceContext context);
+    void preDecide(TraceContext context);
+
+    /**
+     * 决策
+     *
+     * @param context
+     * @param performanceLog
+     * @return
+     */
+    boolean postDecide(TraceContext context, PerformanceLogDto performanceLog);
 
 }

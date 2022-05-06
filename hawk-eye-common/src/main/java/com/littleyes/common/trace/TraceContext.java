@@ -1,15 +1,9 @@
 package com.littleyes.common.trace;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.littleyes.common.dto.PerformanceLogDto;
-import com.littleyes.common.util.PerformanceContext;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import static com.littleyes.common.config.HawkEyeConfig.HAWK_EYE_COMMON;
 
 /**
  * <p> <b> 上下文 </b> </p>
@@ -25,7 +19,11 @@ public class TraceContext {
 
     private String  traceId;
     private boolean debugMode;
-    private List<PerformanceLogDto> performanceLogs;
+    private boolean needSample;
+
+
+    private TraceContext() {
+    }
 
 
     public String getTraceId() {
@@ -36,20 +34,12 @@ public class TraceContext {
         return debugMode;
     }
 
-    public List<PerformanceLogDto> getPerformanceLogs() {
-        return performanceLogs;
+    public boolean isNeedSample() {
+        return needSample;
     }
 
-    public void addPerformanceLog(PerformanceLogDto performanceLog) {
-        this.performanceLogs.add(performanceLog);
-
-        if (isDebugMode()) {
-            log.info("{} {}", HAWK_EYE_COMMON, performanceLog);
-        }
-    }
-
-    private TraceContext() {
-        this.performanceLogs = new ArrayList<>();
+    public void setNeedSample(boolean needSample) {
+        this.needSample = needSample;
     }
 
 
@@ -71,12 +61,8 @@ public class TraceContext {
         return get().debugMode;
     }
 
-    public static void append(int type) {
-        get().addPerformanceLog(PerformanceContext.buildPerformanceLog(type));
-    }
-
-    public static List<PerformanceLogDto> performanceLogs() {
-        return get().performanceLogs;
+    public static boolean needSample() {
+        return get().needSample;
     }
 
 

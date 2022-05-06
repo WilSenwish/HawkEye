@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author Junbing.Chen
  * @date 2021-03-19
  */
-public class HawkEyeStartWarmUpSampleDecision implements SampleDecision {
+public class HawkEyeStartWarmUpPreSampleDecision implements SampleDecision {
 
     private long startWarmUpEndMillis;
 
@@ -28,13 +28,19 @@ public class HawkEyeStartWarmUpSampleDecision implements SampleDecision {
     }
 
     @Override
-    public boolean decide(TraceContext context, SampleDecisionChain chain) {
+    public boolean isPreDecision() {
+        return true;
+    }
+
+    @Override
+    public void preDecide(TraceContext context, SampleDecisionChain chain) {
         // 服务启动预热阶段则采集
         if (inStartWarmUpStage()) {
-            return true;
+            context.setNeedSample(true);
+            return;
         }
 
-        return chain.decide(context);
+        chain.preDecide(context);
     }
 
     private boolean inStartWarmUpStage() {

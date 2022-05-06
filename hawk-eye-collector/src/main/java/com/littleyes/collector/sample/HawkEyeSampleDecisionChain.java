@@ -1,5 +1,6 @@
 package com.littleyes.collector.sample;
 
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.trace.TraceContext;
 
 import java.util.List;
@@ -20,18 +21,31 @@ public class HawkEyeSampleDecisionChain implements SampleDecisionChain {
         this.sampleDecisions = sampleDecisions;
     }
 
-    static boolean startChainDecide(TraceContext context, List<SampleDecision> sampleDecisions) {
-        return new HawkEyeSampleDecisionChain(sampleDecisions).decide(context);
+    static void startChainPreDecide(TraceContext context, List<SampleDecision> sampleDecisions) {
+        new HawkEyeSampleDecisionChain(sampleDecisions).preDecide(context);
+    }
+
+    static boolean startChainPostDecide(TraceContext context, PerformanceLogDto performanceLog, List<SampleDecision> sampleDecisions) {
+        return new HawkEyeSampleDecisionChain(sampleDecisions).postDecide(context, performanceLog);
     }
 
     @Override
-    public boolean decide(TraceContext context) {
+    public void preDecide(TraceContext context) {
+        if (this.currentPosition < this.sampleDecisions.size()) {
+            this.currentPosition++;
+            SampleDecision nextSampleDecision = this.sampleDecisions.get(this.currentPosition - 1);
+            nextSampleDecision.preDecide(context, this);
+        }
+    }
+
+    @Override
+    public boolean postDecide(TraceContext context, PerformanceLogDto performanceLog) {
         if (this.currentPosition == this.sampleDecisions.size()) {
             return false;
         } else {
             this.currentPosition++;
             SampleDecision nextSampleDecision = this.sampleDecisions.get(this.currentPosition - 1);
-            return nextSampleDecision.decide(context, this);
+            return nextSampleDecision.postDecide(context, performanceLog, this);
         }
     }
 

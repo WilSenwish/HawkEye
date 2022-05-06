@@ -1,14 +1,19 @@
 package com.littleyes.collector.core;
 
-import com.littleyes.common.util.PerformanceContext;
+import com.littleyes.collector.buf.PerformanceLogBuffer;
+import com.littleyes.collector.util.PerformanceLogBuilder;
 import com.littleyes.common.config.HawkEyeConfig;
+import com.littleyes.common.dto.PerformanceLogDto;
 import com.littleyes.common.enums.PerformanceTypeEnum;
-import com.littleyes.common.trace.TraceContext;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.plugin.*;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
@@ -57,16 +62,16 @@ public class MybatisMonitorInterceptor implements Interceptor {
             returnObj = invocation.proceed();
             success = true;
         } finally {
-            PerformanceContext.init(
+            PerformanceLogDto performanceLog = PerformanceLogBuilder.build(
                     mappedStatement.getId(),
                     commandType,
-                    PerformanceTypeEnum.MYSQL.getType(),
+                    PerformanceTypeEnum.MYSQL,
                     success,
                     start,
                     System.currentTimeMillis()
             );
+            PerformanceLogBuffer.sample(performanceLog);
             // TODO sql
-            TraceContext.append(PerformanceTypeEnum.MYSQL.getType());
         }
 
         return returnObj;
