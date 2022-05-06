@@ -69,17 +69,23 @@ public class HawkEyeApiFilter implements Filter {
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
-            String uri = req.getRequestURI();
 
-            if (Mappings.exclude(uri)) {
-                Mappings.hack(res);
-                return;
-            }
+            try {
+                String uri = req.getRequestURI();
 
-            if (isNotOptions(req) && isIncludePath(uri)) {
-                this.doFilterInternal(req, res, chain);
-            } else {
-                chain.doFilter(request, response);
+                if (Mappings.exclude(uri)) {
+                    Mappings.hack(res);
+                    return;
+                }
+
+                if (isNotOptions(req) && isIncludePath(uri)) {
+                    this.doFilterInternal(req, res, chain);
+                } else {
+                    chain.doFilter(request, response);
+                }
+            } finally {
+                res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
+                res.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
             }
         } else {
             chain.doFilter(request, response);
@@ -118,8 +124,6 @@ public class HawkEyeApiFilter implements Filter {
         TraceContext context = TraceContext.init(extractTraceId(req), extractTraceDebugSwitch(req));
 
         res.addHeader(TRACE_ID_KEY, context.getTraceId());
-        res.addHeader(GIT_COMMIT_ID_KEY, HawkEyeConfig.getGitCommitId());
-        res.addHeader(PROJECT_NAME_KEY, HawkEyeConfig.getProjectName());
 
         HawkEyeMdc.put(context.getTraceId());
     }

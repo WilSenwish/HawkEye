@@ -20,7 +20,11 @@ public class HawkEyeMdc {
     }
 
     static {
-        log.info("{} Current MDCAdapter is [{}]", HAWK_EYE_COLLECTOR, MDC.getMDCAdapter());
+        try {
+            log.info("{} Current MDCAdapter is [{}]", HAWK_EYE_COLLECTOR, MDC.getMDCAdapter());
+        } catch (Throwable t) {
+            log.warn("{} Change Current MDCAdapter error: {}", HAWK_EYE_COLLECTOR, t.getMessage());
+        }
     }
 
     public static void put(String val) {

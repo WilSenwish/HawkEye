@@ -36,6 +36,10 @@
             <groupId>${hawk-eye.group}</groupId>
             <artifactId>${hawk-eye.artifact}-storage-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${hawk-eye.group}</groupId>
+            <artifactId>${hawk-eye.artifact}-alarm</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
