@@ -42,7 +42,12 @@ public class HawkEyeSampleDecisionManager {
      * @return
      */
     public static void preDecide(TraceContext context) {
+        if (context.isNeedSample()) {
+            return;
+        }
+
         if (fullSample) {
+            context.setNeedSample(true);
             return;
         }
 
